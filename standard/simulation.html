@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Simulation &mdash; picmi  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Field solvers" href="field.html" />
+    <link rel="prev" title="Definition of the standard" href="standard.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> picmi
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../how_to_use/how_to_use.html">How to use the PICMI standard</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="standard.html">Definition of the standard</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="standard.html#simulation-and-grid-setup">Simulation and grid setup</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="field.html">Field solvers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html">Grids</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="standard.html#particles">Particles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard.html#lasers">Lasers</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">picmi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="standard.html">Definition of the standard</a> &raquo;</li>
+        
+      <li>Simulation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/standard/simulation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="simulation">
+<h1>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h1>
+<p>The <cite>Simulation</cite> object is the central object in a PICMI script.
+It defines the simulation time, field solver, registered species, etc.</p>
+<dl class="class">
+<dt id="picmistandard.PICMI_Simulation">
+<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_Simulation</code><span class="sig-paren">(</span><em>solver=None</em>, <em>time_step_size=None</em>, <em>max_steps=None</em>, <em>max_time=None</em>, <em>verbose=None</em>, <em>particle_shape='linear'</em>, <em>gamma_boost=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Simulation object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>solver</strong> (an instance of one of the PICMI field solvers ; see <a class="reference internal" href="field.html"><span class="doc">Field solvers</span></a>) – Field solver to be used in the simulation</li>
+<li><strong>time_step_size</strong> (<em>float</em><em> [</em><em>s</em><em>]</em>) – Absolute time step size of the simulation
+(needed if the CFL is not specified elsewhere)</li>
+<li><strong>max_steps</strong> (<em>int</em>) – Maximum number of time steps
+(Specify either this, or <cite>max_time</cite>, or use the <cite>step</cite> function directly)</li>
+<li><strong>max_time</strong> (<em>float</em><em> [</em><em>s</em><em>]</em>) – Maximum physical time to run the simulation
+(Specify either this, or <cite>max_steps</cite>, or use the <cite>step</cite> function directly)</li>
+<li><strong>verbose</strong> (<em>int</em>) – Verbosity flag (A larger integer results in more verbose output.)</li>
+<li><strong>particle_shape</strong> (<em>string</em>) – Default particle shape for species added to this simulation.
+Possible values are ‘NGP’, ‘linear’, ‘quadratic’, ‘cubic’.</li>
+<li><strong>gamma_boost</strong> (<em>float</em>) – Lorentz factor of the boosted simulation frame.
+(Note that all input values should be in the lab frame)</li>
+<li><strong>kw</strong> (<em>additional code arguments</em>) – Code specific arguments ; should be prefixed with the <cite>codename</cite></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="picmistandard.PICMI_Simulation.add_species">
+<code class="descname">add_species</code><span class="sig-paren">(</span><em>species</em>, <em>layout</em>, <em>initialize_self_field=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.add_species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.add_species" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add species to be used in the simulation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>species</strong> (an instance of one of the PICMI species object ; see <a class="reference internal" href="species.html"><span class="doc">Species objects</span></a>) – Defines added species from the <em>physical</em> point of view
+(e.g. charge, mass, initial distribution of particles)</li>
+<li><strong>layout</strong> (an instance of one of the PICMI layout object ; see <a class="reference internal" href="layout.html"><span class="doc">Particle layouts</span></a>) – Defines how particles are added into the simulation, from the <em>numerical</em> point of view</li>
+<li><strong>initialize_self_field</strong> (<em>bool</em>) – Whether the initial space-charge fields of this species
+is calculated and added to the simulation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="picmistandard.PICMI_Simulation.add_laser">
+<code class="descname">add_laser</code><span class="sig-paren">(</span><em>laser</em>, <em>injection_method</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.add_laser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.add_laser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a laser pulses that to be injected in the simulation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>laser_profile</strong> (one of the PICMI laser profile objects ; see <a class="reference internal" href="laser_profiles.html"><span class="doc">Laser profiles</span></a>) – Specifies the <strong>physical</strong> properties of the laser pulse
+(e.g. spatial and temporal profile, wavelength, amplitude, etc.)</li>
+<li><strong>injection_method</strong> (one of the PICMI laser injector object ; see <a class="reference internal" href="laser_injectors.html"><span class="doc">Laser injectors</span></a>) – Specifies how the laser is injected <strong>numerically</strong> into the simulation
+(e.g. through a laser antenna, or directly added to the mesh).
+This argument describes an <strong>algorithm</strong>, not a physical object.
+It is optional. (It is up to each code to define the default method
+of injection, if the user does not provide injection_method)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="picmistandard.PICMI_Simulation.write_input_file">
+<code class="descname">write_input_file</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.write_input_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.write_input_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the parameters of the simulation, as defined in the PICMI input,
+into another, more code-specific input file.</p>
+<p>This can be used for codes that are not Python-driven (e.g. compiled,
+pure C++ or Fortran codes) and expect a text input in a given format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> (<em>string</em>) – The path to the file that will be created.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="picmistandard.PICMI_Simulation.step">
+<code class="descname">step</code><span class="sig-paren">(</span><em>nsteps=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the simulation for <cite>nsteps</cite> timesteps</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nsteps</strong> (<em>int</em>) – The number of timesteps</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="field.html" class="btn btn-neutral float-right" title="Field solvers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="standard.html" class="btn btn-neutral" title="Definition of the standard" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, PICMI contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

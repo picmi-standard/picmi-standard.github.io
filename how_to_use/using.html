@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using a code that already implements the PICMI standard &mdash; picmi  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Implementing the PICMI standard in an existing code" href="implementing.html" />
+    <link rel="prev" title="How to use the PICMI standard" href="how_to_use.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> picmi
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="how_to_use.html">How to use the PICMI standard</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using a code that already implements the PICMI standard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementing.html">Implementing the PICMI standard in an existing code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../standard/standard.html">Definition of the standard</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">picmi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="how_to_use.html">How to use the PICMI standard</a> &raquo;</li>
+        
+      <li>Using a code that already implements the PICMI standard</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/how_to_use/using.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-a-code-that-already-implements-the-picmi-standard">
+<h1>Using a code that already implements the PICMI standard<a class="headerlink" href="#using-a-code-that-already-implements-the-picmi-standard" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This section is currently in development.</p>
+</div>
+<p>Codes that adopt the PICMI standard use use a Python script as an input.
+This script uses a common set of objects that each code implements.</p>
+<p>Here is an example of input script:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Run parameters - can be in separate file</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># Laser parameters</span>
+<span class="n">laser_waist</span> <span class="o">=</span> <span class="mf">5.e-6</span>  <span class="c1"># The waist of the laser (in meters)</span>
+<span class="n">laser_duration</span> <span class="o">=</span> <span class="mf">15.e-15</span>  <span class="c1"># The duration of the laser (in seconds)</span>
+<span class="n">laser_a0</span> <span class="o">=</span> <span class="mf">4.</span> <span class="c1"># Amplitude of the normalized vector potential</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Physics part - can be in separate file</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="c1"># This should be the only line that needs to be changed for different codes</span>
+<span class="kn">from</span> <span class="nn">plasmacode</span> <span class="kn">import</span> <span class="n">picmi</span>
+
+<span class="c1"># Define the laser profile laser</span>
+<span class="n">laser</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">GaussianLaser</span><span class="p">(</span>
+            <span class="n">a0</span> <span class="o">=</span> <span class="n">laser_a0</span><span class="p">,</span>
+            <span class="n">wavelength</span> <span class="o">=</span> <span class="mf">0.8e-6</span><span class="p">,</span>  <span class="c1"># The wavelength of the laser (in meters)</span>
+            <span class="n">waist</span> <span class="o">=</span> <span class="n">laser_waist</span><span class="p">,</span>  <span class="c1"># The waist of the laser (in meters)</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">laser_duration</span><span class="p">,</span>  <span class="c1"># The duration of the laser (in seconds)</span>
+            <span class="n">polarization_angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>  <span class="c1"># The main polarization vector</span>
+            <span class="n">focal_position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">100.e-6</span><span class="p">],</span>  <span class="c1"># Focal position (m)</span>
+            <span class="n">centroid_position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>  <span class="c1"># Position of the laser centroid at t=0 (m)</span>
+            <span class="n">propagation_direction</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+
+<span class="c1"># Define the electron beam</span>
+<span class="n">beam_dist</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">GaussianBunchDistribution</span><span class="p">(</span>
+                <span class="n">n_physical_particles</span> <span class="o">=</span> <span class="mf">1.e9</span><span class="p">,</span>
+                <span class="n">rms_bunch_size</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.e-6</span><span class="p">,</span> <span class="mf">2.e-6</span><span class="p">,</span> <span class="mf">1.e-6</span><span class="p">],</span>
+                <span class="n">rms_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">10.</span><span class="p">],</span>
+                <span class="n">centroid_position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">100.e-6</span><span class="p">],</span>
+                <span class="n">centroid_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1000.</span><span class="p">],</span>
+                <span class="n">velocity_divergence</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">])</span>
+
+<span class="n">beam</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span>
+            <span class="n">particle_type</span> <span class="o">=</span> <span class="s1">&#39;electron&#39;</span><span class="p">,</span>
+            <span class="n">initial_distribution</span> <span class="o">=</span> <span class="n">beam_dist</span><span class="p">)</span>
+
+<span class="c1"># Define plasma</span>
+<span class="n">plasma_dist</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">AnalyticDistribution</span><span class="p">(</span>
+                <span class="n">density_expression</span> <span class="o">=</span> <span class="s2">&quot;1.e23*tanh((z - 20.e-6)/100.e-6)&quot;</span><span class="p">,</span>
+                <span class="n">fill_in</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">plasma</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">MultiSpecies</span><span class="p">(</span>
+                <span class="n">particle_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;He&#39;</span><span class="p">,</span> <span class="s1">&#39;Ar&#39;</span><span class="p">,</span> <span class="s1">&#39;electron&#39;</span><span class="p">],</span>
+                <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;He+&#39;</span><span class="p">,</span> <span class="s1">&#39;Argon&#39;</span><span class="p">,</span> <span class="s1">&#39;e-&#39;</span><span class="p">],</span>
+                <span class="n">charge_states</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="bp">None</span><span class="p">],</span>
+                <span class="n">proportions</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="mf">0.8</span><span class="p">],</span>
+                <span class="n">initial_distribution</span><span class="o">=</span><span class="n">plasma_dist</span><span class="p">)</span>
+
+<span class="c1"># Individual species in a `MultiSpecies` can be addressed either</span>
+<span class="c1"># with their index (using Python indexing conventions) or with their name</span>
+<span class="c1"># (if the user provided a name)</span>
+<span class="c1"># Set the ionization for the species number 1 (Argon)</span>
+<span class="c1"># and place the created electrons into the species number 2 (electron)</span>
+<span class="n">plasma</span><span class="p">[</span><span class="s1">&#39;Argon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">activate_ionization</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;ADK&quot;</span><span class="p">,</span> <span class="n">target_species</span><span class="o">=</span><span class="n">plasma</span><span class="p">[</span><span class="s1">&#39;e-&#39;</span><span class="p">])</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Numerics part - can be in separate file</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.constants</span> <span class="kn">import</span> <span class="n">c</span>
+<span class="kn">from</span> <span class="nn">plasmacode</span> <span class="kn">import</span> <span class="n">picmi</span>
+
+<span class="c1"># Define the grid</span>
+<span class="n">nx</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">ny</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">nz</span> <span class="o">=</span> <span class="mi">480</span>
+<span class="n">xmin</span> <span class="o">=</span> <span class="o">-</span><span class="mf">30.e-6</span>
+<span class="n">xmax</span> <span class="o">=</span> <span class="o">+</span><span class="mf">30.e-6</span>
+<span class="n">ymin</span> <span class="o">=</span> <span class="o">-</span><span class="mf">30.e-6</span>
+<span class="n">ymax</span> <span class="o">=</span> <span class="o">+</span><span class="mf">30.e-6</span>
+<span class="n">zmin</span> <span class="o">=</span> <span class="o">-</span><span class="mf">56.e-6</span>
+<span class="n">zmax</span> <span class="o">=</span> <span class="o">+</span><span class="mf">12.e-6</span>
+<span class="n">v_window</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="c1"># Setup the grid ; this may be code dependent</span>
+<span class="c1"># Note that code specific arguments use the code name as a prefix.</span>
+<span class="k">if</span> <span class="n">picmi</span><span class="o">.</span><span class="n">codename</span> <span class="o">==</span> <span class="s1">&#39;plasmacode&#39;</span><span class="p">:</span>
+    <span class="n">nr</span> <span class="o">=</span> <span class="n">nx</span><span class="o">/</span><span class="mf">2.</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">CylindricalGrid</span><span class="p">(</span>
+        <span class="n">nr</span><span class="o">=</span><span class="n">nr</span><span class="p">,</span> <span class="n">rmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="n">xmax</span><span class="p">,</span> <span class="n">bc_rmax</span><span class="o">=</span><span class="s1">&#39;reflective&#39;</span><span class="p">,</span>
+        <span class="n">nz</span><span class="o">=</span><span class="n">nz</span><span class="p">,</span> <span class="n">zmin</span><span class="o">=</span><span class="n">zmin</span><span class="p">,</span> <span class="n">zmax</span><span class="o">=</span><span class="n">zmax</span><span class="p">,</span> <span class="n">bc_zmin</span><span class="o">=</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="n">bc_zmax</span><span class="o">=</span><span class="s1">&#39;open&#39;</span><span class="p">,</span>
+        <span class="n">n_azimuthal_modes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">moving_window_velocity</span><span class="o">=</span><span class="n">v_window</span><span class="p">,</span>
+        <span class="n">plasmacode_mode_phase</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">)</span> <span class="c1"># &quot;mode_phase&quot; is a specific argument for the code plasmacode</span>
+<span class="k">elif</span> <span class="n">picmi</span><span class="o">.</span><span class="n">codename</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;plasmacode3D&#39;</span><span class="p">,</span> <span class="s1">&#39;AMRplasmacode&#39;</span><span class="p">]:</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">Cartesian3DGrid</span><span class="p">(</span>
+        <span class="n">nx</span><span class="o">=</span><span class="n">nx</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="n">xmax</span><span class="p">,</span> <span class="n">bc_xmin</span><span class="o">=</span><span class="s1">&#39;periodic&#39;</span><span class="p">,</span> <span class="n">bc_xmax</span><span class="o">=</span><span class="s1">&#39;periodic&#39;</span><span class="p">,</span>
+        <span class="n">ny</span><span class="o">=</span><span class="n">ny</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="n">ymax</span><span class="p">,</span> <span class="n">bc_ymin</span><span class="o">=</span><span class="s1">&#39;periodic&#39;</span><span class="p">,</span> <span class="n">bc_ymax</span><span class="o">=</span><span class="s1">&#39;periodic&#39;</span><span class="p">,</span>
+        <span class="n">nz</span><span class="o">=</span><span class="n">nz</span><span class="p">,</span> <span class="n">zmin</span><span class="o">=</span><span class="n">zmin</span><span class="p">,</span> <span class="n">zmax</span><span class="o">=</span><span class="n">zmax</span><span class="p">,</span> <span class="n">bc_zmin</span><span class="o">=</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="n">bc_zmax</span><span class="o">=</span><span class="s1">&#39;open&#39;</span><span class="p">,</span>
+        <span class="n">moving_window_velocity</span><span class="o">=</span><span class="n">v_window</span><span class="p">,</span>
+        <span class="n">AMRplasmacode_max_grid_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">AMRplasmacode_max_level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># &quot;max_grid&quot; and &quot;max_level&quot; are specific arguments for the code AMRplasmacode</span>
+
+<span class="c1"># Setup the electromagnetic solver</span>
+<span class="n">smoother</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">BinomialSmoother</span><span class="p">(</span><span class="n">n_pass</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">compensation</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">ElectromagneticSolver</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">cfl</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                                     <span class="n">source_smoother</span><span class="o">=</span><span class="n">smoother</span><span class="p">)</span>
+
+<span class="c1"># Initialize the simulation object</span>
+<span class="c1"># Note that the time step size is obtained from the solver</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">Simulation</span><span class="p">(</span>
+        <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">)</span>
+
+<span class="c1"># Inject the laser through an antenna</span>
+<span class="n">antenna</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">LaserAntenna</span><span class="p">(</span>
+                <span class="n">position</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">9.e-6</span><span class="p">),</span>
+                <span class="n">normal_vector</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">add_laser</span><span class="p">(</span><span class="n">laser</span><span class="p">,</span> <span class="n">injection_method</span> <span class="o">=</span> <span class="n">antenna</span><span class="p">)</span>
+
+<span class="c1"># Add the plasma: continuously injected by the moving window</span>
+<span class="k">if</span> <span class="n">picmi</span><span class="o">.</span><span class="n">codename</span> <span class="o">==</span> <span class="s1">&#39;plasmacode&#39;</span><span class="p">:</span>
+    <span class="n">n_macroparticle_per_cell</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;r&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">}</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">n_macroparticle_per_cell</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+
+<span class="n">plasma_layout</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">GriddedLayout</span><span class="p">(</span>
+                    <span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span><span class="p">,</span>
+                    <span class="n">n_macroparticle_per_cell</span> <span class="o">=</span> <span class="n">n_macroparticle_per_cell</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="n">species</span><span class="o">=</span><span class="n">plasma</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">plasma_layout</span><span class="p">)</span>
+<span class="c1"># For Python-driven codes: macroparticles are created at this point</span>
+
+<span class="c1"># Add the beam</span>
+<span class="n">beam_layout</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">PseudoRandomLayout</span><span class="p">(</span>
+                <span class="n">n_macroparticles</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="n">species</span><span class="o">=</span><span class="n">beam</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">beam_layout</span><span class="p">,</span> <span class="n">initialize_self_field</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Add field and particle diagnostics</span>
+<span class="n">field_diag_slicexz</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">FieldDiagnostic</span><span class="p">(</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span><span class="p">,</span>
+                                           <span class="n">data_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">],</span>
+                                           <span class="n">number_of_cells</span> <span class="o">=</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">],</span>
+                                           <span class="n">lower_bound</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.e-6</span><span class="p">,</span> <span class="mf">0.e-6</span><span class="p">,</span> <span class="o">-</span><span class="mf">10.e-6</span><span class="p">],</span>
+                                           <span class="n">upper_bound</span> <span class="o">=</span> <span class="p">[</span> <span class="mf">1.e-6</span><span class="p">,</span> <span class="mf">0.e-6</span><span class="p">,</span> <span class="mf">10.e-6</span><span class="p">],</span>
+                                           <span class="n">period</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">add_diagnostic</span><span class="p">(</span><span class="n">field_diag_slicexz</span><span class="p">)</span>
+
+<span class="n">particle_diag_beam</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">ParticleDiagnostic</span><span class="p">(</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span><span class="p">,</span>
+                                              <span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="n">beam</span><span class="p">],</span>
+                                              <span class="n">period</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">add_diagnostic</span><span class="p">(</span><span class="n">particle_diag_beam</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">picmi input script</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">plasmacode</span> <span class="kn">import</span> <span class="n">picmi</span>
+
+<span class="n">run_python_simulation</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="k">if</span> <span class="n">run_python_simulation</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">set_max_step</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">write_input_file</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;input_script&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="implementing.html" class="btn btn-neutral float-right" title="Implementing the PICMI standard in an existing code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="how_to_use.html" class="btn btn-neutral" title="How to use the PICMI standard" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, PICMI contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Grids &mdash; picmi  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Species objects" href="species.html" />
+    <link rel="prev" title="Field solvers" href="field.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> picmi
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../how_to_use/how_to_use.html">How to use the PICMI standard</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="standard.html">Definition of the standard</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="standard.html#simulation-and-grid-setup">Simulation and grid setup</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="simulation.html">Simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="field.html">Field solvers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Grids</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#d-cartesian-geometry">3D Cartesian geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2D Cartesian geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cylindrical-geometry">Cylindrical geometry</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="standard.html#particles">Particles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard.html#lasers">Lasers</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">picmi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="standard.html">Definition of the standard</a> &raquo;</li>
+        
+      <li>Grids</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/standard/grid.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="grids">
+<h1>Grids<a class="headerlink" href="#grids" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This section is currently in development.</p>
+</div>
+<div class="section" id="d-cartesian-geometry">
+<h2>3D Cartesian geometry<a class="headerlink" href="#d-cartesian-geometry" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="picmistandard.PICMI_Cartesian3DGrid">
+<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_Cartesian3DGrid</code><span class="sig-paren">(</span><em>number_of_cells=None</em>, <em>lower_bound=None</em>, <em>upper_bound=None</em>, <em>lower_boundary_conditions=None</em>, <em>upper_boundary_conditions=None</em>, <em>nx=None</em>, <em>ny=None</em>, <em>nz=None</em>, <em>xmin=None</em>, <em>xmax=None</em>, <em>ymin=None</em>, <em>ymax=None</em>, <em>zmin=None</em>, <em>zmax=None</em>, <em>bc_xmin=None</em>, <em>bc_xmax=None</em>, <em>bc_ymin=None</em>, <em>bc_ymax=None</em>, <em>bc_zmin=None</em>, <em>bc_zmax=None</em>, <em>moving_window_velocity=None</em>, <em>refined_regions=[]</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/fields.html#PICMI_Cartesian3DGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Cartesian3DGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Three dimensional Carteisan grid
+Parameters can be specified either as vectors or separately.</p>
+<blockquote>
+<div><ul class="simple">
+<li>number_of_cells: Number of cells along each axis (number of nodes is number_of_cells+1) (vector)</li>
+<li>lower_bound: Position of the node at the lower bound (vector) [m]</li>
+<li>upper_bound: Position of the node at the upper bound (vector) [m]</li>
+<li>lower_boundary_conditions: Conditions at lower boundaries, periodic, open, dirichlet, or neumann (vector)</li>
+<li>upper_boundary_conditions: Conditions at upper boundaries, periodic, open, dirichlet, or neumann (vector)</li>
+<li>nx: Number of cells along X (number of nodes=nx+1)</li>
+<li>ny: Number of cells along Y (number of nodes=ny+1)</li>
+<li>nz: Number of cells along Z (number of nodes=nz+1)</li>
+<li>xmin: Position of first node along X [m]</li>
+<li>xmax: Position of last node along X [m]</li>
+<li>ymin: Position of first node along Y [m]</li>
+<li>ymax: Position of last node along Y [m]</li>
+<li>zmin: Position of first node along Z [m]</li>
+<li>zmax: Position of last node along Z [m]</li>
+<li>bc_xmin: Boundary condition at min X: One of periodic, open, dirichlet, or neumann</li>
+<li>bc_xmax: Boundary condition at max X: One of periodic, open, dirichlet, or neumann</li>
+<li>bc_ymin: Boundary condition at min Y: One of periodic, open, dirichlet, or neumann</li>
+<li>bc_ymax: Boundary condition at max Y: One of periodic, open, dirichlet, or neumann</li>
+<li>bc_zmin: Boundary condition at min Z: One of periodic, open, dirichlet, or neumann</li>
+<li>bc_zmax: Boundary condition at max Z: One of periodic, open, dirichlet, or neumann</li>
+<li>moving_window_velocity: Moving frame velocity (vector) [m/s]</li>
+<li><dl class="first docutils">
+<dt>refined_regions: List of refined regions, each element being a list of the format [level, lo, hi, refinement_factor],</dt>
+<dd>with level being the refinement level, with 1 being the first level of refinement, 2 being the second etc,
+lo and hi being vectors of length 3 specifying the extent of the region,
+and refinement_factor defaulting to [2,2,2] (relative to next lower level)</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h2>2D Cartesian geometry<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="picmistandard.PICMI_Cartesian2DGrid">
+<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_Cartesian2DGrid</code><span class="sig-paren">(</span><em>number_of_cells=None</em>, <em>lower_bound=None</em>, <em>upper_bound=None</em>, <em>lower_boundary_conditions=None</em>, <em>upper_boundary_conditions=None</em>, <em>nx=None</em>, <em>ny=None</em>, <em>xmin=None</em>, <em>xmax=None</em>, <em>ymin=None</em>, <em>ymax=None</em>, <em>bc_xmin=None</em>, <em>bc_xmax=None</em>, <em>bc_ymin=None</em>, <em>bc_ymax=None</em>, <em>moving_window_velocity=None</em>, <em>refined_regions=[]</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/fields.html#PICMI_Cartesian2DGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Cartesian2DGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Two dimensional Carteisan grid
+Parameters can be specified either as vectors or separately.</p>
+<blockquote>
+<div><ul class="simple">
+<li>number_of_cells: Number of cells along each axis (number of nodes is number_of_cells+1) (vector)</li>
+<li>lower_bound: Position of the node at the lower bound (vector) [m]</li>
+<li>upper_bound: Position of the node at the upper bound (vector) [m]</li>
+<li>lower_boundary_conditions: Conditions at lower boundaries, periodic, open, dirichlet, or neumann (vector)</li>
+<li>upper_boundary_conditions: Conditions at upper boundaries, periodic, open, dirichlet, or neumann (vector)</li>
+<li>nx: Number of cells along X (number of nodes=nx+1)</li>
+<li>ny: Number of cells along Y (number of nodes=ny+1)</li>
+<li>xmin: Position of first node along X [m]</li>
+<li>xmax: Position of last node along X [m]</li>
+<li>ymin: Position of first node along Y [m]</li>
+<li>ymax: Position of last node along Y [m]</li>
+<li>bc_xmin: Boundary condition at min X: One of periodic, open, dirichlet, or neumann</li>
+<li>bc_xmax: Boundary condition at max X: One of periodic, open, dirichlet, or neumann</li>
+<li>bc_ymin: Boundary condition at min Y: One of periodic, open, dirichlet, or neumann</li>
+<li>bc_ymax: Boundary condition at max Y: One of periodic, open, dirichlet, or neumann</li>
+<li>moving_window_velocity: Moving frame velocity (vector) [m/s]</li>
+<li><dl class="first docutils">
+<dt>refined_regions: List of refined regions, each element being a list of the format [level, lo, hi, refinement_factor],</dt>
+<dd>with level being the refinement level, with 1 being the first level of refinement, 2 being the second etc,
+lo and hi being vectors of length 2 specifying the extent of the region,
+and refinement_factor defaulting to [2,2] (relative to next lower level)</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="cylindrical-geometry">
+<h2>Cylindrical geometry<a class="headerlink" href="#cylindrical-geometry" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="picmistandard.PICMI_CylindricalGrid">
+<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_CylindricalGrid</code><span class="sig-paren">(</span><em>number_of_cells=None</em>, <em>lower_bound=None</em>, <em>upper_bound=None</em>, <em>lower_boundary_conditions=None</em>, <em>upper_boundary_conditions=None</em>, <em>nr=None</em>, <em>nz=None</em>, <em>n_azimuthal_modes=None</em>, <em>rmin=None</em>, <em>rmax=None</em>, <em>zmin=None</em>, <em>zmax=None</em>, <em>bc_rmin=None</em>, <em>bc_rmax=None</em>, <em>bc_zmin=None</em>, <em>bc_zmax=None</em>, <em>moving_window_velocity=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/fields.html#PICMI_CylindricalGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_CylindricalGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Axisymmetric, cylindrical grid
+Parameters can be specified either as vectors or separately.</p>
+<blockquote>
+<div><ul class="simple">
+<li>number_of_cells: Number of cells along each axis (number of nodes is number_of_cells+1) (vector)</li>
+<li>lower_bound: Position of the node at the lower bound (vector) [m]</li>
+<li>upper_bound: Position of the node at the upper bound (vector) [m]</li>
+<li>lower_boundary_conditions: Conditions at lower boundaries, periodic, open, dirichlet, or neumann (vector)</li>
+<li>upper_boundary_conditions: Conditions at upper boundaries, periodic, open, dirichlet, or neumann (vector)</li>
+<li>nr: Number of cells along R (number of nodes=nr+1)</li>
+<li>nz: Number of cells along Z (number of nodes=nz+1)</li>
+<li>n_azimuthal_modes: Number of azimuthal modes</li>
+<li>rmin: Position of first node along R [m]</li>
+<li>rmax: Position of last node along R [m]</li>
+<li>zmin: Position of first node along Z [m]</li>
+<li>zmax: Position of last node along Z [m]</li>
+<li>bc_rmin: Boundary condition at min R: One of open, dirichlet, or neumann</li>
+<li>bc_rmax: Boundary condition at max R: One of open, dirichlet, or neumann</li>
+<li>bc_zmin: Boundary condition at min Z: One of periodic, open, dirichlet, or neumann</li>
+<li>bc_zmax: Boundary condition at max Z: One of periodic, open, dirichlet, or neumann</li>
+<li>moving_window_velocity: Moving frame Z velocity [m/s]</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="species.html" class="btn btn-neutral float-right" title="Species objects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="field.html" class="btn btn-neutral" title="Field solvers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, PICMI contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

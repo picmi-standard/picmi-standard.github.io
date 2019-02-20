@@ -1,0 +1,556 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>picmistandard.particles &mdash; picmi  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> picmi
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_use/how_to_use.html">How to use the PICMI standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../standard/standard.html">Definition of the standard</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">picmi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>picmistandard.particles</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for picmistandard.particles</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Classes following the PICMI standard</span>
+<span class="sd">These should be the base classes for Python implementation of the PICMI standard</span>
+<span class="sd">The classes in the file are all particle related</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">_ClassWithInit</span>
+
+<span class="c1"># ---------------</span>
+<span class="c1"># Physics objects</span>
+<span class="c1"># ---------------</span>
+
+
+<div class="viewcode-block" id="PICMI_Species"><a class="viewcode-back" href="../../standard/species.html#picmistandard.PICMI_Species">[docs]</a><span class="k">class</span> <span class="nc">PICMI_Species</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Species</span>
+<span class="sd">      - particle_type=None: A string specifying an elementary particle, atom, or other, as defined in the openPMD 2 species type extension</span>
+<span class="sd">      - name=None: Name of the species</span>
+<span class="sd">      - charge_state=None: Charge state of the species (applies to atoms) [1]</span>
+<span class="sd">      - charge=None: Particle charge, required when type is not specified, otherwise determined from type [C]</span>
+<span class="sd">      - mass=None: Particle mass, required when type is not specified, otherwise determined from type [kg]</span>
+<span class="sd">      - initial_distribution=None: The initial distribution loaded at t=0. Must be one of the standard distributions implemented.</span>
+<span class="sd">      - particle_shape: Particle shape used for deposition and gather ; if None, the default from the `Simulation` object will be used. Possible values are &#39;NGP&#39;, &#39;linear&#39;, &#39;quadratic&#39;, &#39;cubic&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">initial_distribution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">particle_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">particle_type</span> <span class="o">=</span> <span class="n">particle_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">charge</span> <span class="o">=</span> <span class="n">charge</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">charge_state</span> <span class="o">=</span> <span class="n">charge_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="n">mass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_distribution</span> <span class="o">=</span> <span class="n">initial_distribution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">particle_shape</span> <span class="o">=</span> <span class="n">particle_shape</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">interactions</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">activate_ionization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">target_species</span><span class="p">):</span>
+        <span class="c1"># --- TODO: One way of handling interactions is to add a class for each type</span>
+        <span class="c1"># ---       of interaction. Instances would be added to the interactions list</span>
+        <span class="c1"># ---       instead of the list of parameters.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interactions</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;ionization&#39;</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">target_species</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="PICMI_MultiSpecies"><a class="viewcode-back" href="../../standard/species.html#picmistandard.PICMI_MultiSpecies">[docs]</a><span class="k">class</span> <span class="nc">PICMI_MultiSpecies</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    INCOMPLETE: proportions argument is not implemented</span>
+<span class="sd">    Multiple species that are initialized with the same distribution</span>
+<span class="sd">    - particle_types: A list of strings specifying for each species an elementary particle, atom, or other, as defined in the openPMD 2 species type extension</span>
+<span class="sd">    - names: Names of the species (optional)</span>
+<span class="sd">    - charge_states: Charge states of the species (applies to atoms) (optional)</span>
+<span class="sd">    - charges: Particle charges, required when type is not specified, otherwise determined from type [C]</span>
+<span class="sd">    - masses: Particle masses, required when type is not specified, otherwise determined from type [kg]</span>
+<span class="sd">    - proportions: Proportions of the initial distribution made up by each species</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># --- Note to developer: This class attribute needs to be set to the Species class</span>
+    <span class="c1"># --- defined in the codes PICMI implementation.</span>
+    <span class="n">Species_class</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_types</span><span class="o">=</span><span class="p">[],</span> <span class="n">names</span><span class="o">=</span><span class="p">[],</span> <span class="n">charge_states</span><span class="o">=</span><span class="p">[],</span> <span class="n">charges</span><span class="o">=</span><span class="p">[],</span> <span class="n">masses</span><span class="o">=</span><span class="p">[],</span>
+                 <span class="n">initial_distribution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">proportions</span><span class="o">=</span><span class="p">[],</span>
+                 <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">particle_types</span> <span class="o">=</span> <span class="n">particle_types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="n">names</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">charges</span> <span class="o">=</span> <span class="n">charges</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">charge_states</span> <span class="o">=</span> <span class="n">charge_states</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">masses</span> <span class="o">=</span> <span class="n">masses</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_distribution</span> <span class="o">=</span> <span class="n">initial_distribution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span> <span class="o">=</span> <span class="n">proportions</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nspecies</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_nspecies</span><span class="p">(</span><span class="n">particle_types</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_nspecies</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_nspecies</span><span class="p">(</span><span class="n">charges</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_nspecies</span><span class="p">(</span><span class="n">charge_states</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_nspecies</span><span class="p">(</span><span class="n">masses</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_nspecies</span><span class="p">(</span><span class="n">proportions</span><span class="p">)</span>
+
+        <span class="c1"># --- Create the instances of each species</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">species_instances_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">species_instances_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nspecies</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">particle_types</span><span class="p">:</span>
+                <span class="n">particle_type</span> <span class="o">=</span> <span class="n">particle_types</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">particle_type</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">names</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">charges</span><span class="p">:</span>
+                <span class="n">charge</span> <span class="o">=</span> <span class="n">charges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">charge</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">charge_states</span><span class="p">:</span>
+                <span class="n">charge_state</span> <span class="o">=</span> <span class="n">charge_states</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">charge_state</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">masses</span><span class="p">:</span>
+                <span class="n">mass</span> <span class="o">=</span> <span class="n">masses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mass</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">proportions</span><span class="p">:</span>
+                <span class="n">proportion</span> <span class="o">=</span> <span class="n">proportions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">proportion</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">specie</span> <span class="o">=</span> <span class="n">PICMI_MultiSpecies</span><span class="o">.</span><span class="n">Species_class</span><span class="p">(</span><span class="n">particle_type</span> <span class="o">=</span> <span class="n">particle_type</span><span class="p">,</span>
+                                                      <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
+                                                      <span class="n">charge</span> <span class="o">=</span> <span class="n">charge</span><span class="p">,</span>
+                                                      <span class="n">charge_state</span> <span class="o">=</span> <span class="n">charge_state</span><span class="p">,</span>
+                                                      <span class="n">mass</span> <span class="o">=</span> <span class="n">mass</span><span class="p">,</span>
+                                                      <span class="n">initial_distribution</span> <span class="o">=</span> <span class="n">initial_distribution</span><span class="p">)</span>
+                                                      <span class="c1">#proportion = proportion)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">species_instances_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">specie</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">species_instances_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">specie</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">check_nspecies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">nspecies</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">nspecies</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">var</span><span class="p">),</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;All inputs must have the same length&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nspecies</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nspecies</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">species_instances_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">species_instances_list</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+
+<span class="k">class</span> <span class="nc">PICMI_GaussianBunchDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Describes a Gaussian distribution of particles</span>
+<span class="sd">      - n_physical_particles: Number of physical particles in the bunch</span>
+<span class="sd">      - rms_bunch_size: RMS bunch size at t=0 (vector) [m]</span>
+<span class="sd">      - rms_velocity=[0,0,0]: RMS velocity spread at t=0 (vector) [m/s]</span>
+<span class="sd">      - centroid_position=[0,0,0]: Position of the bunch centroid at t=0 (vector) [m]</span>
+<span class="sd">      - centroid_velocity=[0,0,0]: Velocity (gamma*V) of the bunch centroid at t=0 (vector) [m/s]</span>
+<span class="sd">      - velocity_divergence=[0,0,0]: Expansion rate of the bunch at t=0 (vector) [m/s/m]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n_physical_particles</span><span class="p">,</span> <span class="n">rms_bunch_size</span><span class="p">,</span>
+                 <span class="n">rms_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
+                 <span class="n">centroid_position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
+                 <span class="n">centroid_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
+                 <span class="n">velocity_divergence</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
+                 <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_physical_particles</span> <span class="o">=</span> <span class="n">n_physical_particles</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rms_bunch_size</span> <span class="o">=</span> <span class="n">rms_bunch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rms_velocity</span> <span class="o">=</span> <span class="n">rms_velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">centroid_position</span> <span class="o">=</span> <span class="n">centroid_position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">centroid_velocity</span> <span class="o">=</span> <span class="n">centroid_velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">velocity_divergence</span> <span class="o">=</span> <span class="n">velocity_divergence</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">PICMI_UniformDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Describes a uniform density distribution of particles</span>
+<span class="sd">      - density: Physical number density [m^-3]</span>
+<span class="sd">      - lower_bound=[None,None,None]: Lower bound of the distribution (vector) [m]</span>
+<span class="sd">      - upper_bound=[None,None,None]: Upper bound of the distribution (vector) [m]</span>
+<span class="sd">      - rms_velocity=[0,0,0]: Thermal velocity spread (vector) [m/s]</span>
+<span class="sd">      - directed_velocity=[0,0,0]: Directed, average, velocity (vector) [m/s]</span>
+<span class="sd">      - fill_in=False: Flags whether to fill in the empty spaced opened up when the grid moves</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">density</span><span class="p">,</span>
+                 <span class="n">lower_bound</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span>
+                 <span class="n">upper_bound</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span>
+                 <span class="n">rms_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
+                 <span class="n">directed_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
+                 <span class="n">fill_in</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span> <span class="o">=</span> <span class="n">lower_bound</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span> <span class="o">=</span> <span class="n">upper_bound</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rms_velocity</span> <span class="o">=</span> <span class="n">rms_velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">directed_velocity</span> <span class="o">=</span> <span class="n">directed_velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fill_in</span> <span class="o">=</span> <span class="n">fill_in</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">PICMI_AnalyticDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Describes a uniform density plasma</span>
+<span class="sd">      - density_expression: Analytic expression describing physical number density (string) [m^-3]</span>
+<span class="sd">                            Expression should be in terms of the position, written as &#39;x&#39;, &#39;y&#39;, and &#39;z&#39;.</span>
+<span class="sd">                            Parameters can be used in the expression with the values given as keyword arguments.</span>
+<span class="sd">      - lower_bound=[None,None,None]: Lower bound of the distribution (vector) [m]</span>
+<span class="sd">      - upper_bound=[None,None,None]: Upper bound of the distribution (vector) [m]</span>
+<span class="sd">      - rms_velocity=[0,0,0]: Thermal velocity spread (vector) [m/s]</span>
+<span class="sd">      - directed_velocity=[0,0,0]: Directed, average, velocity (vector) [m/s]</span>
+<span class="sd">      - fill_in=False: Flags whether to fill in the empty spaced opened up when the grid moves</span>
+
+<span class="sd">      # This will create a distribution where the density is n0 below rmax and zero elsewhere.</span>
+<span class="sd">      dist = AnalyticDistribution(density_expression=&#39;((x**2+y**2)&lt;rmax**2)*n0&#39;,</span>
+<span class="sd">                                  rmax = 1.,</span>
+<span class="sd">                                  n0 = 1.e20,</span>
+<span class="sd">                                  ...)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">density_expression</span><span class="p">,</span>
+                 <span class="n">lower_bound</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span>
+                 <span class="n">upper_bound</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span>
+                 <span class="n">rms_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
+                 <span class="n">directed_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
+                 <span class="n">fill_in</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">density_expression</span> <span class="o">=</span> <span class="n">density_expression</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span> <span class="o">=</span> <span class="n">lower_bound</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span> <span class="o">=</span> <span class="n">upper_bound</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rms_velocity</span> <span class="o">=</span> <span class="n">rms_velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">directed_velocity</span> <span class="o">=</span> <span class="n">directed_velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fill_in</span> <span class="o">=</span> <span class="n">fill_in</span>
+
+        <span class="c1"># --- Find any user defined keywords in the kw dictionary.</span>
+        <span class="c1"># --- Save them and delete them from kw.</span>
+        <span class="c1"># --- It&#39;s up to the code to make sure that all parameters</span>
+        <span class="c1"># --- used in the expression are defined.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_kw</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">kw</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\b</span><span class="si">%s</span><span class="s1">\b&#39;</span><span class="o">%</span><span class="n">k</span><span class="p">,</span> <span class="n">density_expression</span><span class="p">):</span>
+              <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_kw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">kw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+              <span class="k">del</span> <span class="n">kw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">PICMI_ParticleListDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load particles at the specified positions and velocities</span>
+<span class="sd">      - x=0.: List of x positions of the particles [m]</span>
+<span class="sd">      - y=0.: List of y positions of the particles [m]</span>
+<span class="sd">      - z=0.: List of z positions of the particles [m]</span>
+<span class="sd">      - ux=0.: List of ux positions of the particles (ux = gamma*vx) [m/s]</span>
+<span class="sd">      - uy=0.: List of uy positions of the particles (uy = gamma*vy) [m/s]</span>
+<span class="sd">      - uz=0.: List of uz positions of the particles (uz = gamma*vz) [m/s]</span>
+<span class="sd">      - weight: Particle weight or list of weights, number of real particles per simulation particle</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">ux</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">uy</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">uz</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="c1"># --- Get length of arrays, set to one for scalars</span>
+        <span class="n">lenx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">leny</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">lenz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="n">lenux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">ux</span><span class="p">)</span>
+        <span class="n">lenuy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">uy</span><span class="p">)</span>
+        <span class="n">lenuz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">uz</span><span class="p">)</span>
+        <span class="n">lenw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+
+        <span class="n">maxlen</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">lenx</span><span class="p">,</span> <span class="n">leny</span><span class="p">,</span> <span class="n">lenz</span><span class="p">,</span> <span class="n">lenux</span><span class="p">,</span> <span class="n">lenuy</span><span class="p">,</span> <span class="n">lenuz</span><span class="p">,</span> <span class="n">lenw</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">lenx</span><span class="o">==</span><span class="n">maxlen</span> <span class="ow">or</span> <span class="n">lenx</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Length of x doesn&#39;t match len of others&quot;</span>
+        <span class="k">assert</span> <span class="n">leny</span><span class="o">==</span><span class="n">maxlen</span> <span class="ow">or</span> <span class="n">leny</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Length of y doesn&#39;t match len of others&quot;</span>
+        <span class="k">assert</span> <span class="n">lenz</span><span class="o">==</span><span class="n">maxlen</span> <span class="ow">or</span> <span class="n">lenz</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Length of z doesn&#39;t match len of others&quot;</span>
+        <span class="k">assert</span> <span class="n">lenux</span><span class="o">==</span><span class="n">maxlen</span> <span class="ow">or</span> <span class="n">lenux</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Length of ux doesn&#39;t match len of others&quot;</span>
+        <span class="k">assert</span> <span class="n">lenuy</span><span class="o">==</span><span class="n">maxlen</span> <span class="ow">or</span> <span class="n">lenuy</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Length of uy doesn&#39;t match len of others&quot;</span>
+        <span class="k">assert</span> <span class="n">lenuz</span><span class="o">==</span><span class="n">maxlen</span> <span class="ow">or</span> <span class="n">lenuz</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Length of uz doesn&#39;t match len of others&quot;</span>
+        <span class="k">assert</span> <span class="n">lenw</span><span class="o">==</span><span class="n">maxlen</span> <span class="ow">or</span> <span class="n">lenw</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Length of weight doesn&#39;t match len of others&quot;</span>
+
+        <span class="k">if</span> <span class="n">lenx</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">leny</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lenz</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lenux</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">ux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ux</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lenuy</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">uy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">uy</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lenuz</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">uz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">uz</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">maxlen</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="c1"># --- Note that weight can be a scalar</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ux</span> <span class="o">=</span> <span class="n">ux</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uy</span> <span class="o">=</span> <span class="n">uy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uz</span> <span class="o">=</span> <span class="n">uz</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+
+
+<span class="c1"># ------------------</span>
+<span class="c1"># Numeric Objects</span>
+<span class="c1"># ------------------</span>
+
+
+<span class="k">class</span> <span class="nc">PICMI_ParticleDistributionPlanarInjector</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Describes the injection of particles from a plane</span>
+<span class="sd">      - position: Position of the particle centroid (vector) [m]</span>
+<span class="sd">      - plane_normal: Vector normal to the plane of injection (vector) [1]</span>
+<span class="sd">      - plane_velocity: Velocity of the plane of injection (vector) [m/s]</span>
+<span class="sd">      - method: InPlace - method of injection. One of &#39;InPlace&#39;, or &#39;Plane&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">plane_normal</span><span class="p">,</span> <span class="n">plane_velocity</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;InPlace&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plane_normal</span> <span class="o">=</span> <span class="n">plane_normal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plane_velocity</span> <span class="o">=</span> <span class="n">plane_velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PICMI_GriddedLayout"><a class="viewcode-back" href="../../standard/layout.html#picmistandard.PICMI_GriddedLayout">[docs]</a><span class="k">class</span> <span class="nc">PICMI_GriddedLayout</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Specifies a gridded layout of particles</span>
+<span class="sd">    - n_macroparticle_per_cell: number of particles per cell along each axis (vector)</span>
+<span class="sd">    - grid: grid object specifying the grid to follow (optional)</span>
+<span class="sd">    If not specified, the underlying grid of the code is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_macroparticle_per_cell</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_macroparticle_per_cell</span> <span class="o">=</span> <span class="n">n_macroparticle_per_cell</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PICMI_PseudoRandomLayout"><a class="viewcode-back" href="../../standard/layout.html#picmistandard.PICMI_PseudoRandomLayout">[docs]</a><span class="k">class</span> <span class="nc">PICMI_PseudoRandomLayout</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Specifies a pseudo-random layout of the particles</span>
+
+<span class="sd">    Only one of these should be specified:</span>
+<span class="sd">    - n_macroparticles: total number of macroparticles to load</span>
+<span class="sd">    - n_macroparticles_per_cell: number of macroparticles to load per cell</span>
+<span class="sd">    - seed: pseudo-random number generator seed (optional)</span>
+<span class="sd">    - grid: grid object specifying the grid to follow for n_macroparticles_per_cell (optional)</span>
+<span class="sd">    If not specified, the underlying grid of the code is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_macroparticles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_macroparticles_per_cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+
+        <span class="k">assert</span> <span class="p">(</span><span class="n">n_macroparticles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="n">n_macroparticles_per_cell</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">),</span> \
+               <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Only one of n_macroparticles and n_macroparticles_per_cell must be specified&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_macroparticles</span> <span class="o">=</span> <span class="n">n_macroparticles</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_macroparticles_per_cell</span> <span class="o">=</span> <span class="n">n_macroparticles_per_cell</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, PICMI contributors.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
