@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Laser injectors" href="laser_injectors.html" />
     <link rel="prev" title="Particle layouts" href="layout.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -159,35 +161,34 @@
   <div class="section" id="laser-profiles">
 <h1>Laser profiles<a class="headerlink" href="#laser-profiles" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This section is currently in development.</p>
+<p class="admonition-title">Warning</p>
+<p>This section is currently in development.</p>
 </div>
 <dl class="class">
 <dt id="picmistandard.PICMI_GaussianLaser">
 <em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_GaussianLaser</code><span class="sig-paren">(</span><em>wavelength, waist, duration, focal_position=[0.0, 0.0, 0.0], centroid_position=[0.0, 0.0, 0.0], propagation_direction=[0.0, 0.0, 1.0], polarization_angle=0.0, a0=None, E0=None, zeta=None, beta=None, phi2=None, **kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/lasers.html#PICMI_GaussianLaser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_GaussianLaser" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Specifies a Gaussian laser distribution</dt>
-<dd><ul class="first last simple">
-<li>wavelength: Laser wavelength</li>
-<li>waist: Waist of the Gaussian pulse at focus [m]</li>
-<li>duration: Duration of the Gaussian pulse [s]</li>
-<li>focal_position=[0,0,0]: Position of the laser focus (vector) [m]</li>
-<li>centroid_position=[0,0,0]: Position of the laser centroid at time 0 (vector) [m]</li>
-<li>propagation_direction=[0,0,1]: Direction of propagation (unit vector) [1]</li>
-<li>polarization_angle=0: Angle of polarization (relative to X) [radians]</li>
-<li><dl class="first docutils">
-<dt>a0: Normalized vector potential at focus</dt>
-<dd>Specify either a0 or E0 (E0 takes precedence).</dd>
+<dd><dl class="simple">
+<dt>Specifies a Gaussian laser distribution</dt><dd><ul class="simple">
+<li><p>wavelength: Laser wavelength</p></li>
+<li><p>waist: Waist of the Gaussian pulse at focus [m]</p></li>
+<li><p>duration: Duration of the Gaussian pulse [s]</p></li>
+<li><p>focal_position=[0,0,0]: Position of the laser focus (vector) [m]</p></li>
+<li><p>centroid_position=[0,0,0]: Position of the laser centroid at time 0 (vector) [m]</p></li>
+<li><p>propagation_direction=[0,0,1]: Direction of propagation (unit vector) [1]</p></li>
+<li><p>polarization_angle=0: Angle of polarization (relative to X) [radians]</p></li>
+<li><dl class="simple">
+<dt>a0: Normalized vector potential at focus</dt><dd><p>Specify either a0 or E0 (E0 takes precedence).</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>E0: Maximum amplitude of the laser field [V/m]</dt>
-<dd>Specify either a0 or E0 (E0 takes precedence).</dd>
+<li><dl class="simple">
+<dt>E0: Maximum amplitude of the laser field [V/m]</dt><dd><p>Specify either a0 or E0 (E0 takes precedence).</p>
+</dd>
 </dl>
 </li>
-<li>zeta: Spatial chirp at focus (in the lab frame) [m.s]</li>
-<li>beta: Angular dispersion at focus (in the lab frame) [rad.s]</li>
-<li>phi2: Temporal chirp at focus (in the lab frame) [s^2]</li>
+<li><p>zeta: Spatial chirp at focus (in the lab frame) [m.s]</p></li>
+<li><p>beta: Angular dispersion at focus (in the lab frame) [rad.s]</p></li>
+<li><p>phi2: Temporal chirp at focus (in the lab frame) [s^2]</p></li>
 </ul>
 </dd>
 </dl>
@@ -206,7 +207,7 @@
         <a href="laser_injectors.html" class="btn btn-neutral float-right" title="Laser injectors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="layout.html" class="btn btn-neutral" title="Particle layouts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="layout.html" class="btn btn-neutral float-left" title="Particle layouts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -215,7 +216,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, PICMI contributors.
+        &copy; Copyright 2018, PICMI contributors
 
     </p>
   </div>
@@ -232,33 +233,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

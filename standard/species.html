@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Particle layouts" href="layout.html" />
     <link rel="prev" title="Grids" href="grid.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -159,22 +161,21 @@
   <div class="section" id="species-objects">
 <h1>Species objects<a class="headerlink" href="#species-objects" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This section is currently in development.</p>
+<p class="admonition-title">Warning</p>
+<p>This section is currently in development.</p>
 </div>
 <dl class="class">
 <dt id="picmistandard.PICMI_Species">
 <em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_Species</code><span class="sig-paren">(</span><em>particle_type=None</em>, <em>name=None</em>, <em>charge_state=None</em>, <em>charge=None</em>, <em>mass=None</em>, <em>initial_distribution=None</em>, <em>particle_shape=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_Species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Species" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Species</dt>
-<dd><ul class="first last simple">
-<li>particle_type=None: A string specifying an elementary particle, atom, or other, as defined in the openPMD 2 species type extension</li>
-<li>name=None: Name of the species</li>
-<li>charge_state=None: Charge state of the species (applies to atoms) [1]</li>
-<li>charge=None: Particle charge, required when type is not specified, otherwise determined from type [C]</li>
-<li>mass=None: Particle mass, required when type is not specified, otherwise determined from type [kg]</li>
-<li>initial_distribution=None: The initial distribution loaded at t=0. Must be one of the standard distributions implemented.</li>
-<li>particle_shape: Particle shape used for deposition and gather ; if None, the default from the <cite>Simulation</cite> object will be used. Possible values are ‘NGP’, ‘linear’, ‘quadratic’, ‘cubic’</li>
+<dd><dl class="simple">
+<dt>Species</dt><dd><ul class="simple">
+<li><p>particle_type=None: A string specifying an elementary particle, atom, or other, as defined in the openPMD 2 species type extension</p></li>
+<li><p>name=None: Name of the species</p></li>
+<li><p>charge_state=None: Charge state of the species (applies to atoms) [1]</p></li>
+<li><p>charge=None: Particle charge, required when type is not specified, otherwise determined from type [C]</p></li>
+<li><p>mass=None: Particle mass, required when type is not specified, otherwise determined from type [kg]</p></li>
+<li><p>initial_distribution=None: The initial distribution loaded at t=0. Must be one of the standard distributions implemented.</p></li>
+<li><p>particle_shape: Particle shape used for deposition and gather ; if None, the default from the <cite>Simulation</cite> object will be used. Possible values are ‘NGP’, ‘linear’, ‘quadratic’, ‘cubic’</p></li>
 </ul>
 </dd>
 </dl>
@@ -206,7 +207,7 @@ Multiple species that are initialized with the same distribution
         <a href="layout.html" class="btn btn-neutral float-right" title="Particle layouts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="grid.html" class="btn btn-neutral" title="Grids" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="grid.html" class="btn btn-neutral float-left" title="Grids" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -215,7 +216,7 @@ Multiple species that are initialized with the same distribution
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, PICMI contributors.
+        &copy; Copyright 2018, PICMI contributors
 
     </p>
   </div>
@@ -232,33 +233,16 @@ Multiple species that are initialized with the same distribution
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -281,7 +283,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">species_instances_list</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
 
 
-<span class="k">class</span> <span class="nc">PICMI_GaussianBunchDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+<div class="viewcode-block" id="PICMI_GaussianBunchDistribution"><a class="viewcode-back" href="../../standard/distribution.html#picmistandard.PICMI_GaussianBunchDistribution">[docs]</a><span class="k">class</span> <span class="nc">PICMI_GaussianBunchDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Describes a Gaussian distribution of particles</span>
 <span class="sd">      - n_physical_particles: Number of physical particles in the bunch</span>
@@ -304,10 +306,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">centroid_velocity</span> <span class="o">=</span> <span class="n">centroid_velocity</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">velocity_divergence</span> <span class="o">=</span> <span class="n">velocity_divergence</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">PICMI_UniformDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+<div class="viewcode-block" id="PICMI_UniformDistribution"><a class="viewcode-back" href="../../standard/distribution.html#picmistandard.PICMI_UniformDistribution">[docs]</a><span class="k">class</span> <span class="nc">PICMI_UniformDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Describes a uniform density distribution of particles</span>
 <span class="sd">      - density: Physical number density [m^-3]</span>
@@ -332,10 +334,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">directed_velocity</span> <span class="o">=</span> <span class="n">directed_velocity</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fill_in</span> <span class="o">=</span> <span class="n">fill_in</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">PICMI_AnalyticDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+<div class="viewcode-block" id="PICMI_AnalyticDistribution"><a class="viewcode-back" href="../../standard/distribution.html#picmistandard.PICMI_AnalyticDistribution">[docs]</a><span class="k">class</span> <span class="nc">PICMI_AnalyticDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Describes a uniform density plasma</span>
 <span class="sd">      - density_expression: Analytic expression describing physical number density (string) [m^-3]</span>
@@ -378,10 +380,10 @@
               <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_kw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">kw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
               <span class="k">del</span> <span class="n">kw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">PICMI_ParticleListDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+<div class="viewcode-block" id="PICMI_ParticleListDistribution"><a class="viewcode-back" href="../../standard/distribution.html#picmistandard.PICMI_ParticleListDistribution">[docs]</a><span class="k">class</span> <span class="nc">PICMI_ParticleListDistribution</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load particles at the specified positions and velocities</span>
 <span class="sd">      - x=0.: List of x positions of the particles [m]</span>
@@ -434,7 +436,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">uy</span> <span class="o">=</span> <span class="n">uy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uz</span> <span class="o">=</span> <span class="n">uz</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
 
 
 <span class="c1"># ------------------</span>
@@ -507,7 +509,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, PICMI contributors.
+        &copy; Copyright 2018, PICMI contributors
 
     </p>
   </div>
@@ -524,33 +526,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

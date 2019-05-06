@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Grids" href="grid.html" />
     <link rel="prev" title="Simulation" href="simulation.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -164,24 +166,24 @@
   <div class="section" id="field-solvers">
 <h1>Field solvers<a class="headerlink" href="#field-solvers" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This section is currently in development.</p>
+<p class="admonition-title">Warning</p>
+<p>This section is currently in development.</p>
 </div>
 <div class="section" id="electromagnetic">
 <h2>Electromagnetic<a class="headerlink" href="#electromagnetic" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="picmistandard.PICMI_ElectromagneticSolver">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_ElectromagneticSolver</code><span class="sig-paren">(</span><em>grid</em>, <em>method=None</em>, <em>stencil_order=None</em>, <em>cfl=None</em>, <em>l_nodal=None</em>, <em>source_smoother=None</em>, <em>field_smoother=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/fields.html#PICMI_ElectromagneticSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ElectromagneticSolver" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Electromagnetic field solver</dt>
-<dd><ul class="first last simple">
-<li>grid: grid object to be used by the solver</li>
-<li>method: One of Yee, CKC, Lehe, PSTD, PSATD, or GPSTD</li>
-<li>stencil_order: Order of stencil for each axis (-1=infinite) (vector)</li>
-<li>cfl=None: Fraction of the Courant-Friedrich-Lewy criteria [1]</li>
-<li>l_nodal=None: Quantities are at nodes if True, staggered otherwise</li>
-<li>source_smoother=None: Smoother to apply to the sources</li>
-<li>field_smoother=None: Smoother to apply to the fields</li>
+<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_ElectromagneticSolver</code><span class="sig-paren">(</span><em>grid</em>, <em>method=None</em>, <em>stencil_order=None</em>, <em>cfl=None</em>, <em>l_nodal=None</em>, <em>source_smoother=None</em>, <em>field_smoother=None</em>, <em>subcycling=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/fields.html#PICMI_ElectromagneticSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ElectromagneticSolver" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Electromagnetic field solver</dt><dd><ul class="simple">
+<li><p>grid: grid object to be used by the solver (grid object)</p></li>
+<li><p>method: One of ‘Yee’, ‘CKC’, ‘Lehe’, ‘PSTD’, ‘PSATD’, or ‘GPSTD’ (string)</p></li>
+<li><p>stencil_order: Order of stencil for each axis (-1=infinite) (vector of integers)</p></li>
+<li><p>cfl = None: Fraction of the Courant-Friedrich-Lewy criteria [1] (float)</p></li>
+<li><p>l_nodal = None: Quantities are at nodes if True, staggered otherwise (boolean)</p></li>
+<li><p>source_smoother = None: Smoother object to apply to the sources (smoother object)</p></li>
+<li><p>field_smoother = None: Smoother object to apply to the fields (smoother object)</p></li>
+<li><p>subcycling = None: level of subcycling for the GPSTD solver (integer)</p></li>
 </ul>
 </dd>
 </dl>
@@ -193,11 +195,10 @@
 <dl class="class">
 <dt id="picmistandard.PICMI_ElectrostaticSolver">
 <em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_ElectrostaticSolver</code><span class="sig-paren">(</span><em>grid</em>, <em>method=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/fields.html#PICMI_ElectrostaticSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ElectrostaticSolver" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Electrostatic field solver</dt>
-<dd><ul class="first last simple">
-<li>grid: grid object to be used by the solver</li>
-<li>method: One of FFT, or Multigrid</li>
+<dd><dl class="simple">
+<dt>Electrostatic field solver</dt><dd><ul class="simple">
+<li><p>grid: grid object to be used by the solver (grid object)</p></li>
+<li><p>method = None: One of ‘FFT’, or ‘Multigrid’ (string)</p></li>
 </ul>
 </dd>
 </dl>
@@ -217,7 +218,7 @@
         <a href="grid.html" class="btn btn-neutral float-right" title="Grids" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="simulation.html" class="btn btn-neutral" title="Simulation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="simulation.html" class="btn btn-neutral float-left" title="Simulation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -226,7 +227,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, PICMI contributors.
+        &copy; Copyright 2018, PICMI contributors
 
     </p>
   </div>
@@ -243,33 +244,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

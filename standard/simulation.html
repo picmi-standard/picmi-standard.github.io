@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Field solvers" href="field.html" />
     <link rel="prev" title="Definition of the standard" href="standard.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -163,73 +165,66 @@
 It defines the simulation time, field solver, registered species, etc.</p>
 <dl class="class">
 <dt id="picmistandard.PICMI_Simulation">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_Simulation</code><span class="sig-paren">(</span><em>solver=None</em>, <em>time_step_size=None</em>, <em>max_steps=None</em>, <em>max_time=None</em>, <em>verbose=None</em>, <em>particle_shape='linear'</em>, <em>gamma_boost=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a Simulation object</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>solver</strong> (an instance of one of the PICMI field solvers ; see <a class="reference internal" href="field.html"><span class="doc">Field solvers</span></a>) – Field solver to be used in the simulation</li>
-<li><strong>time_step_size</strong> (<em>float</em><em> [</em><em>s</em><em>]</em>) – Absolute time step size of the simulation
-(needed if the CFL is not specified elsewhere)</li>
-<li><strong>max_steps</strong> (<em>int</em>) – Maximum number of time steps
-(Specify either this, or <cite>max_time</cite>, or use the <cite>step</cite> function directly)</li>
-<li><strong>max_time</strong> (<em>float</em><em> [</em><em>s</em><em>]</em>) – Maximum physical time to run the simulation
-(Specify either this, or <cite>max_steps</cite>, or use the <cite>step</cite> function directly)</li>
-<li><strong>verbose</strong> (<em>int</em>) – Verbosity flag (A larger integer results in more verbose output.)</li>
-<li><strong>particle_shape</strong> (<em>string</em>) – Default particle shape for species added to this simulation.
-Possible values are ‘NGP’, ‘linear’, ‘quadratic’, ‘cubic’.</li>
-<li><strong>gamma_boost</strong> (<em>float</em>) – Lorentz factor of the boosted simulation frame.
-(Note that all input values should be in the lab frame)</li>
-<li><strong>kw</strong> (<em>additional code arguments</em>) – Code specific arguments ; should be prefixed with the <cite>codename</cite></li>
+<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_Simulation</code><span class="sig-paren">(</span><em>solver=None</em>, <em>time_step_size=None</em>, <em>max_steps=None</em>, <em>max_time=None</em>, <em>verbose=None</em>, <em>particle_shape='linear'</em>, <em>gamma_boost=None</em>, <em>cpu_split=None</em>, <em>load_balancing=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Simulation object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>solver</strong> (<em>object</em>) – An instance of one of the PICMI field solvers ; see <a class="reference internal" href="field.html"><span class="doc">Field solvers</span></a>
+This is the field solver to be used in the simulation</p></li>
+<li><p><strong>time_step_size</strong> (<em>float</em>) – Absolute time step size of the simulation [s]
+(needed if the CFL is not specified elsewhere)</p></li>
+<li><p><strong>max_steps</strong> (<em>int</em>) – Maximum number of time steps
+(Specify either this, or <cite>max_time</cite>, or use the <cite>step</cite> function directly)</p></li>
+<li><p><strong>max_time</strong> (<em>float</em>) – Maximum physical time to run the simulation [s]
+(Specify either this, or <cite>max_steps</cite>, or use the <cite>step</cite> function directly)</p></li>
+<li><p><strong>verbose</strong> (<em>int</em>) – Verbosity flag (A larger integer results in more verbose output.)</p></li>
+<li><p><strong>particle_shape</strong> (<em>str</em>) – Default particle shape for species added to this simulation.
+Possible values are ‘NGP’, ‘linear’, ‘quadratic’, ‘cubic’.</p></li>
+<li><p><strong>gamma_boost</strong> (<em>float</em>) – Lorentz factor of the boosted simulation frame.
+(Note that all input values should be in the lab frame)</p></li>
+<li><p><strong>kw</strong> (<em>additional code arguments</em>) – Code specific arguments ; should be prefixed with the <cite>codename</cite></p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="picmistandard.PICMI_Simulation.add_species">
 <code class="descname">add_species</code><span class="sig-paren">(</span><em>species</em>, <em>layout</em>, <em>initialize_self_field=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.add_species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.add_species" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add species to be used in the simulation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>species</strong> (an instance of one of the PICMI species object ; see <a class="reference internal" href="species.html"><span class="doc">Species objects</span></a>) – Defines added species from the <em>physical</em> point of view
-(e.g. charge, mass, initial distribution of particles)</li>
-<li><strong>layout</strong> (an instance of one of the PICMI layout object ; see <a class="reference internal" href="layout.html"><span class="doc">Particle layouts</span></a>) – Defines how particles are added into the simulation, from the <em>numerical</em> point of view</li>
-<li><strong>initialize_self_field</strong> (<em>bool</em>) – Whether the initial space-charge fields of this species
-is calculated and added to the simulation.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<em>-</em>) – an instance of one of the PICMI species object ; see <a class="reference internal" href="species.html"><span class="doc">Species objects</span></a>
+Defines added species from the <em>physical</em> point of view
+(e.g. charge, mass, initial distribution of particles)</p></li>
+<li><p><strong>layout</strong> (<em>-</em>) – an instance of one of the PICMI layout object ; see <a class="reference internal" href="layout.html"><span class="doc">Particle layouts</span></a>
+Defines how particles are added into the simulation, from the <em>numerical</em> point of view</p></li>
+<li><p><strong>initialize_self_field</strong> (<em>-</em>) – Whether the initial space-charge fields of this species
+is calculated and added to the simulation</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="picmistandard.PICMI_Simulation.add_laser">
 <code class="descname">add_laser</code><span class="sig-paren">(</span><em>laser</em>, <em>injection_method</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.add_laser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.add_laser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a laser pulses that to be injected in the simulation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>laser_profile</strong> (one of the PICMI laser profile objects ; see <a class="reference internal" href="laser_profiles.html"><span class="doc">Laser profiles</span></a>) – Specifies the <strong>physical</strong> properties of the laser pulse
-(e.g. spatial and temporal profile, wavelength, amplitude, etc.)</li>
-<li><strong>injection_method</strong> (one of the PICMI laser injector object ; see <a class="reference internal" href="laser_injectors.html"><span class="doc">Laser injectors</span></a>) – Specifies how the laser is injected <strong>numerically</strong> into the simulation
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>laser_profile</strong> (<em>-</em>) – one of laser profile objects
+Specifies the <strong>physical</strong> properties of the laser pulse.
+(e.g. spatial and temporal profile, wavelength, amplitude, etc.)</p></li>
+<li><p><strong>injection_method</strong> (<em>-</em>) – a laser injector object (optional)
+Specifies how the laser is injected (numerically) into the simulation
 (e.g. through a laser antenna, or directly added to the mesh).
 This argument describes an <strong>algorithm</strong>, not a physical object.
 It is optional. (It is up to each code to define the default method
-of injection, if the user does not provide injection_method)</li>
+of injection, if the user does not provide injection_method)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -239,28 +234,22 @@ of injection, if the user does not provide injection_method)</li>
 into another, more code-specific input file.</p>
 <p>This can be used for codes that are not Python-driven (e.g. compiled,
 pure C++ or Fortran codes) and expect a text input in a given format.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> (<em>string</em>) – The path to the file that will be created.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – The path to the file that will be created.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="picmistandard.PICMI_Simulation.step">
 <code class="descname">step</code><span class="sig-paren">(</span><em>nsteps=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the simulation for <cite>nsteps</cite> timesteps</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nsteps</strong> (<em>int</em>) – The number of timesteps</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nsteps</strong> (<em>int</em>) – The number of timesteps</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -278,7 +267,7 @@ pure C++ or Fortran codes) and expect a text input in a given format.</p>
         <a href="field.html" class="btn btn-neutral float-right" title="Field solvers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="standard.html" class="btn btn-neutral" title="Definition of the standard" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="standard.html" class="btn btn-neutral float-left" title="Definition of the standard" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -287,7 +276,7 @@ pure C++ or Fortran codes) and expect a text input in a given format.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, PICMI contributors.
+        &copy; Copyright 2018, PICMI contributors
 
     </p>
   </div>
@@ -304,33 +293,16 @@ pure C++ or Fortran codes) and expect a text input in a given format.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

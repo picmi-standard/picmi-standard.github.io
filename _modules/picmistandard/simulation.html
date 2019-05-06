@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -151,35 +153,35 @@
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">_ClassWithInit</span>
 
 <span class="c1"># ---------------------</span>
-<span class="c1"># Main simuation object</span>
+<span class="c1"># Main simulation object</span>
 <span class="c1"># ---------------------</span>
 
 <div class="viewcode-block" id="PICMI_Simulation"><a class="viewcode-back" href="../../standard/simulation.html#picmistandard.PICMI_Simulation">[docs]</a><span class="k">class</span> <span class="nc">PICMI_Simulation</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a Simulation object</span>
-
+<span class="sd">    Creates a Simulation object</span>
+<span class="sd">    </span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-
-<span class="sd">    solver: an instance of one of the PICMI field solvers ; see :doc:`field`</span>
-<span class="sd">        Field solver to be used in the simulation</span>
-
-<span class="sd">    time_step_size: float [s]</span>
-<span class="sd">        Absolute time step size of the simulation</span>
+<span class="sd">    solver: object </span>
+<span class="sd">        An instance of one of the PICMI field solvers ; see :doc:`field`</span>
+<span class="sd">        This is the field solver to be used in the simulation</span>
+<span class="sd">  </span>
+<span class="sd">    time_step_size: float </span>
+<span class="sd">        Absolute time step size of the simulation [s]</span>
 <span class="sd">        (needed if the CFL is not specified elsewhere)</span>
 
 <span class="sd">    max_steps: int</span>
 <span class="sd">        Maximum number of time steps</span>
 <span class="sd">        (Specify either this, or `max_time`, or use the `step` function directly)</span>
 
-<span class="sd">    max_time: float [s]</span>
-<span class="sd">        Maximum physical time to run the simulation</span>
+<span class="sd">    max_time: float </span>
+<span class="sd">        Maximum physical time to run the simulation [s]</span>
 <span class="sd">        (Specify either this, or `max_steps`, or use the `step` function directly)</span>
 
 <span class="sd">    verbose: int</span>
 <span class="sd">        Verbosity flag (A larger integer results in more verbose output.)</span>
 
-<span class="sd">    particle_shape: string</span>
+<span class="sd">    particle_shape: str</span>
 <span class="sd">        Default particle shape for species added to this simulation.</span>
 <span class="sd">        Possible values are &#39;NGP&#39;, &#39;linear&#39;, &#39;quadratic&#39;, &#39;cubic&#39;.</span>
 
@@ -191,9 +193,8 @@
 <span class="sd">        Code specific arguments ; should be prefixed with the `codename`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_step_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">max_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">particle_shape</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span>
-                <span class="n">gamma_boost</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_step_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">particle_shape</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">gamma_boost</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cpu_split</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">load_balancing</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">solver</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time_step_size</span> <span class="o">=</span> <span class="n">time_step_size</span>
@@ -211,25 +212,31 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">laser_injection_methods</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">diagnostics</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">cpu_split</span> <span class="o">=</span> <span class="n">cpu_split</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_balancing</span> <span class="o">=</span> <span class="n">load_balancing</span>
+        
 
         <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PICMI_Simulation.add_species"><a class="viewcode-back" href="../../standard/simulation.html#picmistandard.PICMI_Simulation.add_species">[docs]</a>    <span class="k">def</span> <span class="nf">add_species</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">layout</span><span class="p">,</span> <span class="n">initialize_self_field</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add species to be used in the simulation</span>
-
+<span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        species: an instance of one of the PICMI species object ; see :doc:`species`</span>
-<span class="sd">            Defines added species from the *physical* point of view</span>
-<span class="sd">            (e.g. charge, mass, initial distribution of particles)</span>
+<span class="sd">        - species : object </span>
+<span class="sd">              an instance of one of the PICMI species object ; see :doc:`species`</span>
+<span class="sd">              Defines added species from the *physical* point of view</span>
+<span class="sd">              (e.g. charge, mass, initial distribution of particles) </span>
 
-<span class="sd">        layout: an instance of one of the PICMI layout object ; see :doc:`layout`</span>
-<span class="sd">            Defines how particles are added into the simulation, from the *numerical* point of view</span>
+<span class="sd">        - layout : object </span>
+<span class="sd">              an instance of one of the PICMI layout object ; see :doc:`layout`</span>
+<span class="sd">              Defines how particles are added into the simulation, from the *numerical* point of view</span>
 
-<span class="sd">        initialize_self_field: bool</span>
-<span class="sd">            Whether the initial space-charge fields of this species</span>
-<span class="sd">            is calculated and added to the simulation.</span>
+<span class="sd">        - initialize_self_field : bool</span>
+<span class="sd">              Whether the initial space-charge fields of this species</span>
+<span class="sd">              is calculated and added to the simulation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">species</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
@@ -241,16 +248,18 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        laser_profile: one of the PICMI laser profile objects ; see :doc:`laser_profiles`</span>
-<span class="sd">            Specifies the **physical** properties of the laser pulse</span>
-<span class="sd">            (e.g. spatial and temporal profile, wavelength, amplitude, etc.)</span>
+<span class="sd">          - laser_profile: object </span>
+<span class="sd">                one of laser profile objects</span>
+<span class="sd">                Specifies the **physical** properties of the laser pulse.</span>
+<span class="sd">                (e.g. spatial and temporal profile, wavelength, amplitude, etc.)</span>
 
-<span class="sd">        injection_method: one of the PICMI laser injector object ; see :doc:`laser_injectors`</span>
-<span class="sd">            Specifies how the laser is injected **numerically** into the simulation</span>
-<span class="sd">            (e.g. through a laser antenna, or directly added to the mesh).</span>
-<span class="sd">            This argument describes an **algorithm**, not a physical object.</span>
-<span class="sd">            It is optional. (It is up to each code to define the default method</span>
-<span class="sd">            of injection, if the user does not provide injection_method)</span>
+<span class="sd">          - injection_method: object (optional)</span>
+<span class="sd">                a laser injector object (optional)</span>
+<span class="sd">                Specifies how the laser is injected (numerically) into the simulation</span>
+<span class="sd">                (e.g. through a laser antenna, or directly added to the mesh).</span>
+<span class="sd">                This argument describes an **algorithm**, not a physical object.</span>
+<span class="sd">                It is optional. (It is up to each code to define the default method</span>
+<span class="sd">                of injection, if the user does not provide injection_method)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lasers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">laser</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">laser_injection_methods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">injection_method</span><span class="p">)</span></div>
@@ -258,7 +267,8 @@
     <span class="k">def</span> <span class="nf">add_diagnostic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diagnostic</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a diagnostic</span>
-<span class="sd">          - diagnostic: one of the diagnostic objects</span>
+<span class="sd">          - diagnostic: object </span>
+<span class="sd">                One of the diagnostic objects. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">diagnostics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">diagnostic</span><span class="p">)</span>
 
@@ -272,7 +282,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        file_name: string</span>
+<span class="sd">        file_name: str</span>
 <span class="sd">            The path to the file that will be created.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
@@ -299,7 +309,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, PICMI contributors.
+        &copy; Copyright 2018, PICMI contributors
 
     </p>
   </div>
@@ -316,33 +326,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
