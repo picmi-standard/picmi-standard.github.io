@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -34,7 +35,9 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Particle layouts" href="layout.html" />
+    <link rel="prev" title="Species objects" href="species.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,9 +81,19 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../how_to_use/how_to_use.html">How to use the PICMI standard</a></li>
-<li class="toctree-l1"><a class="reference internal" href="standard.html">Definition of the standard</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="standard.html">Definition of the standard</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="standard.html#simulation-and-grid-setup">Simulation and grid setup</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="standard.html#particles">Particles</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="species.html">Species objects</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Particle distributions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layout.html">Particle layouts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="standard.html#lasers">Lasers</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -125,6 +138,8 @@
   <ul class="wy-breadcrumbs">
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="standard.html">Definition of the standard</a> &raquo;</li>
         
       <li>Particle distributions</li>
     
@@ -185,12 +200,19 @@
 
 <dl class="class">
 <dt id="picmistandard.PICMI_AnalyticDistribution">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_AnalyticDistribution</code><span class="sig-paren">(</span><em>density_expression, lower_bound=[None, None, None], upper_bound=[None, None, None], rms_velocity=[0.0, 0.0, 0.0], directed_velocity=[0.0, 0.0, 0.0], fill_in=False, **kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_AnalyticDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_AnalyticDistribution" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_AnalyticDistribution</code><span class="sig-paren">(</span><em>density_expression, momentum_expressions=[None, None, None], lower_bound=[None, None, None], upper_bound=[None, None, None], rms_velocity=[0.0, 0.0, 0.0], directed_velocity=[0.0, 0.0, 0.0], fill_in=False, **kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_AnalyticDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_AnalyticDistribution" title="Permalink to this definition">¶</a></dt>
 <dd><dl>
 <dt>Describes a uniform density plasma</dt><dd><ul class="simple">
 <li><dl class="simple">
 <dt>density_expression: Analytic expression describing physical number density (string) [m^-3]</dt><dd><p>Expression should be in terms of the position, written as ‘x’, ‘y’, and ‘z’.
 Parameters can be used in the expression with the values given as keyword arguments.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>momentum_expressions=[None, None, None]: Analytic expressions describing the gamma*velocity for each axis (vector of strings) [m/s]</dt><dd><p>Expressions should be in terms of the position, written as ‘x’, ‘y’, and ‘z’.
+Parameters can be used in the expression with the values given as keyword arguments.
+For any axis not supplied, directed_velocity will be used.</p>
 </dd>
 </dl>
 </li>
@@ -235,6 +257,15 @@ n0 = 1.e20,
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="layout.html" class="btn btn-neutral float-right" title="Particle layouts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="species.html" class="btn btn-neutral float-left" title="Species objects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -166,7 +167,7 @@
 </div>
 <dl class="class">
 <dt id="picmistandard.PICMI_GaussianLaser">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_GaussianLaser</code><span class="sig-paren">(</span><em>wavelength, waist, duration, focal_position=[0.0, 0.0, 0.0], centroid_position=[0.0, 0.0, 0.0], propagation_direction=[0.0, 0.0, 1.0], polarization_angle=0.0, a0=None, E0=None, zeta=None, beta=None, phi2=None, **kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/lasers.html#PICMI_GaussianLaser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_GaussianLaser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_GaussianLaser</code><span class="sig-paren">(</span><em>wavelength, waist, duration, focal_position=[0.0, 0.0, 0.0], centroid_position=[0.0, 0.0, 0.0], propagation_direction=[0.0, 0.0, 1.0], polarization_direction=[1.0, 0.0, 0.0], a0=None, E0=None, zeta=None, beta=None, phi2=None, **kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/lasers.html#PICMI_GaussianLaser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_GaussianLaser" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Specifies a Gaussian laser distribution</dt><dd><ul class="simple">
 <li><p>wavelength: Laser wavelength</p></li>
@@ -175,7 +176,7 @@
 <li><p>focal_position=[0,0,0]: Position of the laser focus (vector) [m]</p></li>
 <li><p>centroid_position=[0,0,0]: Position of the laser centroid at time 0 (vector) [m]</p></li>
 <li><p>propagation_direction=[0,0,1]: Direction of propagation (unit vector) [1]</p></li>
-<li><p>polarization_angle=0: Angle of polarization (relative to X) [radians]</p></li>
+<li><p>polarization_direction=[1,0,0]: Direction of polarization (unit vector) [1]</p></li>
 <li><dl class="simple">
 <dt>a0: Normalized vector potential at focus</dt><dd><p>Specify either a0 or E0 (E0 takes precedence).</p>
 </dd>
