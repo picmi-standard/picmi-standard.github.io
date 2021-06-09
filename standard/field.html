@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -93,6 +93,8 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="grid.html">Grids</a></li>
 <li class="toctree-l3"><a class="reference internal" href="constants.html">Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="applied_field.html">Applied Field descriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="diagnostics.html">Diagnostics</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="standard.html#particles">Particles</a></li>
@@ -173,9 +175,9 @@
 </div>
 <div class="section" id="electromagnetic">
 <h2>Electromagnetic<a class="headerlink" href="#electromagnetic" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_ElectromagneticSolver">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_ElectromagneticSolver</code><span class="sig-paren">(</span><em>grid</em>, <em>method=None</em>, <em>stencil_order=None</em>, <em>cfl=None</em>, <em>l_nodal=None</em>, <em>source_smoother=None</em>, <em>field_smoother=None</em>, <em>subcycling=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/fields.html#PICMI_ElectromagneticSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ElectromagneticSolver" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_ElectromagneticSolver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grid</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">stencil_order</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cfl</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">l_nodal</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">source_smoother</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">field_smoother</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">subcycling</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">galilean_velocity</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/fields.html#PICMI_ElectromagneticSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ElectromagneticSolver" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Electromagnetic field solver</dt><dd><ul class="simple">
 <li><p>grid: grid object to be used by the solver (grid object)</p></li>
@@ -186,6 +188,7 @@
 <li><p>source_smoother = None: Smoother object to apply to the sources (smoother object)</p></li>
 <li><p>field_smoother = None: Smoother object to apply to the fields (smoother object)</p></li>
 <li><p>subcycling = None: level of subcycling for the GPSTD solver (integer)</p></li>
+<li><p>galilean_velocity = None: Velocity of Galilean reference frame (vector of floats) [m/s]</p></li>
 </ul>
 </dd>
 </dl>
@@ -194,13 +197,15 @@
 </div>
 <div class="section" id="electrostatic">
 <h2>Electrostatic<a class="headerlink" href="#electrostatic" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_ElectrostaticSolver">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_ElectrostaticSolver</code><span class="sig-paren">(</span><em>grid</em>, <em>method=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/fields.html#PICMI_ElectrostaticSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ElectrostaticSolver" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_ElectrostaticSolver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grid</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">required_precision</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maximum_iterations</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/fields.html#PICMI_ElectrostaticSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ElectrostaticSolver" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Electrostatic field solver</dt><dd><ul class="simple">
 <li><p>grid: grid object to be used by the solver (grid object)</p></li>
 <li><p>method = None: One of ‘FFT’, or ‘Multigrid’ (string)</p></li>
+<li><p>required_precision: Level of precision required for iterative solvers (float)</p></li>
+<li><p>maximum_iterations: Maximum number of iterations for iterative solvers (integer)</p></li>
 </ul>
 </dd>
 </dl>

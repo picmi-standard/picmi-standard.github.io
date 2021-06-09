@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -166,18 +166,18 @@
 <p class="admonition-title">Warning</p>
 <p>This section is currently in development.</p>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_GriddedLayout">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_GriddedLayout</code><span class="sig-paren">(</span><em>n_macroparticle_per_cell</em>, <em>grid=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_GriddedLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_GriddedLayout" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_GriddedLayout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_macroparticle_per_cell</span></em>, <em class="sig-param"><span class="n">grid</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_GriddedLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_GriddedLayout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies a gridded layout of particles
 - n_macroparticle_per_cell: number of particles per cell along each axis (vector)
 - grid: grid object specifying the grid to follow (optional)
 If not specified, the underlying grid of the code is used.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_PseudoRandomLayout">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_PseudoRandomLayout</code><span class="sig-paren">(</span><em>n_macroparticles=None</em>, <em>n_macroparticles_per_cell=None</em>, <em>seed=None</em>, <em>grid=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_PseudoRandomLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_PseudoRandomLayout" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_PseudoRandomLayout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_macroparticles</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">n_macroparticles_per_cell</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">grid</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_PseudoRandomLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_PseudoRandomLayout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies a pseudo-random layout of the particles</p>
 <p>Only one of these should be specified:
 - n_macroparticles: total number of macroparticles to load

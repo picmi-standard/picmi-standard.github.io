@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -165,11 +165,12 @@
 <p class="admonition-title">Warning</p>
 <p>This section is currently in development.</p>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_GaussianLaser">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_GaussianLaser</code><span class="sig-paren">(</span><em>wavelength, waist, duration, focal_position=[0.0, 0.0, 0.0], centroid_position=[0.0, 0.0, 0.0], propagation_direction=[0.0, 0.0, 1.0], polarization_direction=[1.0, 0.0, 0.0], a0=None, E0=None, zeta=None, beta=None, phi2=None, **kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/lasers.html#PICMI_GaussianLaser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_GaussianLaser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_GaussianLaser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">wavelength</span></em>, <em class="sig-param"><span class="n">waist</span></em>, <em class="sig-param"><span class="n">duration</span></em>, <em class="sig-param"><span class="n">focal_position</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">centroid_position</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">propagation_direction</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 1.0]</span></em>, <em class="sig-param"><span class="n">polarization_direction</span><span class="o">=</span><span class="default_value">[1.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">a0</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">E0</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">phi0</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">zeta</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">beta</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">phi2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fill_in</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/lasers.html#PICMI_GaussianLaser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_GaussianLaser" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Specifies a Gaussian laser distribution</dt><dd><ul class="simple">
+<li><p>name=None: Optional name of the laser</p></li>
 <li><p>wavelength: Laser wavelength</p></li>
 <li><p>waist: Waist of the Gaussian pulse at focus [m]</p></li>
 <li><p>duration: Duration of the Gaussian pulse [s]</p></li>
@@ -187,10 +188,42 @@
 </dd>
 </dl>
 </li>
+<li><p>phi0: Carrier envelope phase (CEP) [rad]</p></li>
 <li><p>zeta: Spatial chirp at focus (in the lab frame) [m.s]</p></li>
 <li><p>beta: Angular dispersion at focus (in the lab frame) [rad.s]</p></li>
 <li><p>phi2: Temporal chirp at focus (in the lab frame) [s^2]</p></li>
+<li><p>fill_in=True: Flags whether to fill in the empty spaced opened up when the grid moves</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="picmistandard.PICMI_AnalyticLaser">
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_AnalyticLaser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">field_expression</span></em>, <em class="sig-param"><span class="n">wavelength</span></em>, <em class="sig-param"><span class="n">propagation_direction</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 1.0]</span></em>, <em class="sig-param"><span class="n">polarization_direction</span><span class="o">=</span><span class="default_value">[1.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">amax</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">Emax</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fill_in</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/lasers.html#PICMI_AnalyticLaser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_AnalyticLaser" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Specifies a laser with an analytically described distribution</dt><dd><ul class="simple">
+<li><p>name=None: Optional name of the laser</p></li>
+<li><dl class="simple">
+<dt>field_expression: Analytic expression describing the electric field of the laser(string) [V/m]</dt><dd><p>Expression should be in terms of the position, ‘X’, ‘Y’, in the plane orthogonal
+to the propagation direction, and ‘t’ the time. The expression should describe
+the full field, including the oscillitory component.
+Parameters can be used in the expression with the values given as keyword arguments.</p>
+</dd>
+</dl>
+</li>
+<li><p>propagation_direction=[0,0,1]: Direction of propagation (unit vector) [1]</p></li>
+<li><p>polarization_direction=[1,0,0]: Direction of polarization (unit vector) [1]</p></li>
+</ul>
+<p>Even though the parameters below should be built into the expression, some codes require
+specified values for numerical purposes.</p>
+<ul class="simple">
+<li><p>wavelength: Laser wavelength</p></li>
+<li><p>amax: Maximum normalized vector potential</p></li>
+<li><p>Emax: Maximum amplitude of the laser field [V/m]</p></li>
+</ul>
+<p>Specify either amax or Emax (Emax takes precedence).
+- fill_in=True: Flags whether to fill in the empty spaced opened up when the grid moves</p>
 </dd>
 </dl>
 </dd></dl>

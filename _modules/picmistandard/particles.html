@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -152,8 +152,9 @@
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">_ClassWithInit</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">_ClassWithInit</span>
 
 <span class="c1"># ---------------</span>
 <span class="c1"># Physics objects</span>
@@ -173,7 +174,7 @@
 <span class="sd">      - particle_shape: Particle shape used for deposition and gather ; if None, the default from the `Simulation` object will be used. Possible values are &#39;NGP&#39;, &#39;linear&#39;, &#39;quadratic&#39;, &#39;cubic&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">initial_distribution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">particle_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">density_scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">particle_type</span> <span class="o">=</span> <span class="n">particle_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
@@ -214,7 +215,7 @@
     <span class="c1"># --- defined in the codes PICMI implementation.</span>
     <span class="n">Species_class</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge_states</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">masses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge_states</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">masses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">proportions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">initial_distribution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">particle_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
 
@@ -278,10 +279,10 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">var</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nspecies</span>
 
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">species_instances_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -298,7 +299,7 @@
 <span class="sd">      - centroid_velocity=[0,0,0]: Velocity (gamma*V) of the bunch centroid at t=0 (vector) [m/s]</span>
 <span class="sd">      - velocity_divergence=[0,0,0]: Expansion rate of the bunch at t=0 (vector) [m/s/m]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n_physical_particles</span><span class="p">,</span> <span class="n">rms_bunch_size</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n_physical_particles</span><span class="p">,</span> <span class="n">rms_bunch_size</span><span class="p">,</span>
                  <span class="n">rms_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
                  <span class="n">centroid_position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
                  <span class="n">centroid_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
@@ -322,15 +323,15 @@
 <span class="sd">      - upper_bound=[None,None,None]: Upper bound of the distribution (vector) [m]</span>
 <span class="sd">      - rms_velocity=[0,0,0]: Thermal velocity spread (vector) [m/s]</span>
 <span class="sd">      - directed_velocity=[0,0,0]: Directed, average, velocity (vector) [m/s]</span>
-<span class="sd">      - fill_in=False: Flags whether to fill in the empty spaced opened up when the grid moves</span>
+<span class="sd">      - fill_in: Flags whether to fill in the empty spaced opened up when the grid moves</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">density</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">density</span><span class="p">,</span>
                  <span class="n">lower_bound</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span>
                  <span class="n">upper_bound</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span>
                  <span class="n">rms_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
                  <span class="n">directed_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
-                 <span class="n">fill_in</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">fill_in</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span> <span class="o">=</span> <span class="n">lower_bound</span>
@@ -356,7 +357,7 @@
 <span class="sd">      - upper_bound=[None,None,None]: Upper bound of the distribution (vector) [m]</span>
 <span class="sd">      - rms_velocity=[0,0,0]: Thermal velocity spread (vector) [m/s]</span>
 <span class="sd">      - directed_velocity=[0,0,0]: Directed, average, velocity (vector) [m/s]</span>
-<span class="sd">      - fill_in=False: Flags whether to fill in the empty spaced opened up when the grid moves</span>
+<span class="sd">      - fill_in: Flags whether to fill in the empty spaced opened up when the grid moves</span>
 
 <span class="sd">      # This will create a distribution where the density is n0 below rmax and zero elsewhere.</span>
 <span class="sd">      dist = AnalyticDistribution(density_expression=&#39;((x**2+y**2)&lt;rmax**2)*n0&#39;,</span>
@@ -365,13 +366,13 @@
 <span class="sd">                                  ...)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">density_expression</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">density_expression</span><span class="p">,</span>
                  <span class="n">momentum_expressions</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
                  <span class="n">lower_bound</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span>
                  <span class="n">upper_bound</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span>
                  <span class="n">rms_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
                  <span class="n">directed_velocity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span>
-                 <span class="n">fill_in</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">fill_in</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">density_expression</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">density_expression</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">momentum_expressions</span> <span class="o">=</span> <span class="n">momentum_expressions</span>
@@ -422,7 +423,7 @@
 <span class="sd">      - uz=0.: List of uz positions of the particles (uz = gamma*vz) [m/s]</span>
 <span class="sd">      - weight: Particle weight or list of weights, number of real particles per simulation particle</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">ux</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">uy</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">uz</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">ux</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">uy</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">uz</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="c1"># --- Get length of arrays, set to one for scalars</span>
         <span class="n">lenx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -480,7 +481,7 @@
 <span class="sd">      - plane_velocity: Velocity of the plane of injection (vector) [m/s]</span>
 <span class="sd">      - method: InPlace - method of injection. One of &#39;InPlace&#39;, or &#39;Plane&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">plane_normal</span><span class="p">,</span> <span class="n">plane_velocity</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;InPlace&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">plane_normal</span><span class="p">,</span> <span class="n">plane_velocity</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;InPlace&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plane_normal</span> <span class="o">=</span> <span class="n">plane_normal</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plane_velocity</span> <span class="o">=</span> <span class="n">plane_velocity</span>
@@ -496,7 +497,7 @@
 <span class="sd">    - grid: grid object specifying the grid to follow (optional)</span>
 <span class="sd">    If not specified, the underlying grid of the code is used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_macroparticle_per_cell</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_macroparticle_per_cell</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_macroparticle_per_cell</span> <span class="o">=</span> <span class="n">n_macroparticle_per_cell</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span>
 
@@ -514,7 +515,7 @@
 <span class="sd">    - grid: grid object specifying the grid to follow for n_macroparticles_per_cell (optional)</span>
 <span class="sd">    If not specified, the underlying grid of the code is used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_macroparticles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_macroparticles_per_cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_macroparticles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_macroparticles_per_cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
 
         <span class="k">assert</span> <span class="p">(</span><span class="n">n_macroparticles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="n">n_macroparticles_per_cell</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">),</span> \
                <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Only one of n_macroparticles and n_macroparticles_per_cell must be specified&#39;</span><span class="p">)</span>

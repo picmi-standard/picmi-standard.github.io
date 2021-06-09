@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -150,8 +150,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
 
-<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">_ClassWithInit</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">_ClassWithInit</span><span class="p">,</span> <span class="n">_get_constants</span>
 
 <span class="c1"># ---------------</span>
 <span class="c1"># Physics objects</span>
@@ -160,6 +161,7 @@
 <div class="viewcode-block" id="PICMI_GaussianLaser"><a class="viewcode-back" href="../../standard/laser_profiles.html#picmistandard.PICMI_GaussianLaser">[docs]</a><span class="k">class</span> <span class="nc">PICMI_GaussianLaser</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Specifies a Gaussian laser distribution</span>
+<span class="sd">      - name=None: Optional name of the laser</span>
 <span class="sd">      - wavelength: Laser wavelength</span>
 <span class="sd">      - waist: Waist of the Gaussian pulse at focus [m]</span>
 <span class="sd">      - duration: Duration of the Gaussian pulse [s]</span>
@@ -171,29 +173,34 @@
 <span class="sd">            Specify either a0 or E0 (E0 takes precedence).</span>
 <span class="sd">      - E0: Maximum amplitude of the laser field [V/m]</span>
 <span class="sd">            Specify either a0 or E0 (E0 takes precedence).</span>
+<span class="sd">      - phi0: Carrier envelope phase (CEP) [rad]</span>
 <span class="sd">      - zeta: Spatial chirp at focus (in the lab frame) [m.s]</span>
 <span class="sd">      - beta: Angular dispersion at focus (in the lab frame) [rad.s]</span>
 <span class="sd">      - phi2: Temporal chirp at focus (in the lab frame) [s^2]</span>
+<span class="sd">      - fill_in=True: Flags whether to fill in the empty spaced opened up when the grid moves</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">waist</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">waist</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span>
                  <span class="n">focal_position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
                  <span class="n">centroid_position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
                  <span class="n">propagation_direction</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
                  <span class="n">polarization_direction</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
-                 <span class="n">a0</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">a0</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">E0</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">phi0</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">zeta</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">beta</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">phi2</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">fill_in</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+
+        <span class="k">assert</span> <span class="n">E0</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">a0</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;One of E0 or a0 must be speficied&#39;</span>
 
         <span class="n">k0</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">wavelength</span>
         <span class="k">if</span> <span class="n">E0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">constants</span>
-            <span class="n">E0</span> <span class="o">=</span> <span class="n">a0</span><span class="o">*</span><span class="n">constants</span><span class="o">.</span><span class="n">electron_mass</span><span class="o">*</span><span class="n">constants</span><span class="o">.</span><span class="n">speed_of_light</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">k0</span><span class="o">/</span><span class="n">constants</span><span class="o">.</span><span class="n">elementary_charge</span>
+            <span class="n">E0</span> <span class="o">=</span> <span class="n">a0</span><span class="o">*</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">m_e</span><span class="o">*</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">k0</span><span class="o">/</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">q_e</span>
         <span class="k">if</span> <span class="n">a0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">constants</span>
-            <span class="n">a0</span> <span class="o">=</span> <span class="n">E0</span><span class="o">/</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">electron_mass</span><span class="o">*</span><span class="n">constants</span><span class="o">.</span><span class="n">speed_of_light</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">k0</span><span class="o">/</span><span class="n">constants</span><span class="o">.</span><span class="n">elementary_charge</span><span class="p">)</span>
+            <span class="n">a0</span> <span class="o">=</span> <span class="n">E0</span><span class="o">/</span><span class="p">(</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">m_e</span><span class="o">*</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">k0</span><span class="o">/</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">q_e</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span> <span class="o">=</span> <span class="n">wavelength</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k0</span> <span class="o">=</span> <span class="n">k0</span>
@@ -205,9 +212,76 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">polarization_direction</span> <span class="o">=</span> <span class="n">polarization_direction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a0</span> <span class="o">=</span> <span class="n">a0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">E0</span> <span class="o">=</span> <span class="n">E0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phi0</span> <span class="o">=</span> <span class="n">phi0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">zeta</span> <span class="o">=</span> <span class="n">zeta</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">phi2</span> <span class="o">=</span> <span class="n">phi2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fill_in</span> <span class="o">=</span> <span class="n">fill_in</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PICMI_AnalyticLaser"><a class="viewcode-back" href="../../standard/laser_profiles.html#picmistandard.PICMI_AnalyticLaser">[docs]</a><span class="k">class</span> <span class="nc">PICMI_AnalyticLaser</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Specifies a laser with an analytically described distribution</span>
+<span class="sd">      - name=None: Optional name of the laser</span>
+<span class="sd">      - field_expression: Analytic expression describing the electric field of the laser(string) [V/m]</span>
+<span class="sd">                            Expression should be in terms of the position, &#39;X&#39;, &#39;Y&#39;, in the plane orthogonal</span>
+<span class="sd">                            to the propagation direction, and &#39;t&#39; the time. The expression should describe</span>
+<span class="sd">                            the full field, including the oscillitory component.</span>
+<span class="sd">                            Parameters can be used in the expression with the values given as keyword arguments.</span>
+<span class="sd">      - propagation_direction=[0,0,1]: Direction of propagation (unit vector) [1]</span>
+<span class="sd">      - polarization_direction=[1,0,0]: Direction of polarization (unit vector) [1]</span>
+
+<span class="sd">      Even though the parameters below should be built into the expression, some codes require</span>
+<span class="sd">      specified values for numerical purposes.</span>
+
+<span class="sd">      - wavelength: Laser wavelength</span>
+<span class="sd">      - amax: Maximum normalized vector potential</span>
+<span class="sd">      - Emax: Maximum amplitude of the laser field [V/m]</span>
+<span class="sd">      Specify either amax or Emax (Emax takes precedence).</span>
+<span class="sd">      - fill_in=True: Flags whether to fill in the empty spaced opened up when the grid moves</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_expression</span><span class="p">,</span>
+                 <span class="n">wavelength</span><span class="p">,</span>
+                 <span class="n">propagation_direction</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+                 <span class="n">polarization_direction</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+                 <span class="n">amax</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">Emax</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">fill_in</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+
+        <span class="k">assert</span> <span class="n">Emax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">amax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;One of Emax or amax must be speficied&#39;</span>
+
+        <span class="n">k0</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">wavelength</span>
+        <span class="k">if</span> <span class="n">Emax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">Emax</span> <span class="o">=</span> <span class="n">amax</span><span class="o">*</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">m_e</span><span class="o">*</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">k0</span><span class="o">/</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">q_e</span>
+        <span class="k">if</span> <span class="n">amax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">amax</span> <span class="o">=</span> <span class="n">Emax</span><span class="o">/</span><span class="p">(</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">m_e</span><span class="o">*</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">k0</span><span class="o">/</span><span class="n">_get_constants</span><span class="p">()</span><span class="o">.</span><span class="n">q_e</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wavelength</span> <span class="o">=</span> <span class="n">wavelength</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field_expression</span> <span class="o">=</span> <span class="n">field_expression</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k0</span> <span class="o">=</span> <span class="n">k0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propagation_direction</span> <span class="o">=</span> <span class="n">propagation_direction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">polarization_direction</span> <span class="o">=</span> <span class="n">polarization_direction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amax</span> <span class="o">=</span> <span class="n">amax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Emax</span> <span class="o">=</span> <span class="n">Emax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fill_in</span> <span class="o">=</span> <span class="n">fill_in</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">field_expression</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field_expression</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="c1"># --- Find any user defined keywords in the kw dictionary.</span>
+        <span class="c1"># --- Save them and delete them from kw.</span>
+        <span class="c1"># --- It&#39;s up to the code to make sure that all parameters</span>
+        <span class="c1"># --- used in the expression are defined.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_kw</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">kw</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\b</span><span class="si">%s</span><span class="s1">\b&#39;</span><span class="o">%</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_expression</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_kw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">kw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">kw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
 
@@ -223,13 +297,12 @@
 <span class="sd">      - position: Position of antenna launching the laser (vector) [m]</span>
 <span class="sd">      - normal_vector: Vector normal to antenna plane (vector) [1]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">normal_vector</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">normal_vector</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">normal_vector</span> <span class="o">=</span> <span class="n">normal_vector</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
-
 </pre></div>
 
            </div>

@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -166,9 +166,9 @@
 <p class="admonition-title">Warning</p>
 <p>This section is currently in development.</p>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_GaussianBunchDistribution">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_GaussianBunchDistribution</code><span class="sig-paren">(</span><em>n_physical_particles, rms_bunch_size, rms_velocity=[0.0, 0.0, 0.0], centroid_position=[0.0, 0.0, 0.0], centroid_velocity=[0.0, 0.0, 0.0], velocity_divergence=[0.0, 0.0, 0.0], **kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_GaussianBunchDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_GaussianBunchDistribution" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_GaussianBunchDistribution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_physical_particles</span></em>, <em class="sig-param"><span class="n">rms_bunch_size</span></em>, <em class="sig-param"><span class="n">rms_velocity</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">centroid_position</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">centroid_velocity</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">velocity_divergence</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_GaussianBunchDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_GaussianBunchDistribution" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Describes a Gaussian distribution of particles</dt><dd><ul class="simple">
 <li><p>n_physical_particles: Number of physical particles in the bunch</p></li>
@@ -182,9 +182,9 @@
 </dl>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_UniformDistribution">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_UniformDistribution</code><span class="sig-paren">(</span><em>density, lower_bound=[None, None, None], upper_bound=[None, None, None], rms_velocity=[0.0, 0.0, 0.0], directed_velocity=[0.0, 0.0, 0.0], fill_in=False, **kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_UniformDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_UniformDistribution" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_UniformDistribution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">density</span></em>, <em class="sig-param"><span class="n">lower_bound</span><span class="o">=</span><span class="default_value">[None, None, None]</span></em>, <em class="sig-param"><span class="n">upper_bound</span><span class="o">=</span><span class="default_value">[None, None, None]</span></em>, <em class="sig-param"><span class="n">rms_velocity</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">directed_velocity</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">fill_in</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_UniformDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_UniformDistribution" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Describes a uniform density distribution of particles</dt><dd><ul class="simple">
 <li><p>density: Physical number density [m^-3]</p></li>
@@ -192,15 +192,15 @@
 <li><p>upper_bound=[None,None,None]: Upper bound of the distribution (vector) [m]</p></li>
 <li><p>rms_velocity=[0,0,0]: Thermal velocity spread (vector) [m/s]</p></li>
 <li><p>directed_velocity=[0,0,0]: Directed, average, velocity (vector) [m/s]</p></li>
-<li><p>fill_in=False: Flags whether to fill in the empty spaced opened up when the grid moves</p></li>
+<li><p>fill_in: Flags whether to fill in the empty spaced opened up when the grid moves</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_AnalyticDistribution">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_AnalyticDistribution</code><span class="sig-paren">(</span><em>density_expression, momentum_expressions=[None, None, None], lower_bound=[None, None, None], upper_bound=[None, None, None], rms_velocity=[0.0, 0.0, 0.0], directed_velocity=[0.0, 0.0, 0.0], fill_in=False, **kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_AnalyticDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_AnalyticDistribution" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_AnalyticDistribution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">density_expression</span></em>, <em class="sig-param"><span class="n">momentum_expressions</span><span class="o">=</span><span class="default_value">[None, None, None]</span></em>, <em class="sig-param"><span class="n">lower_bound</span><span class="o">=</span><span class="default_value">[None, None, None]</span></em>, <em class="sig-param"><span class="n">upper_bound</span><span class="o">=</span><span class="default_value">[None, None, None]</span></em>, <em class="sig-param"><span class="n">rms_velocity</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">directed_velocity</span><span class="o">=</span><span class="default_value">[0.0, 0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">fill_in</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_AnalyticDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_AnalyticDistribution" title="Permalink to this definition">¶</a></dt>
 <dd><dl>
 <dt>Describes a uniform density plasma</dt><dd><ul class="simple">
 <li><dl class="simple">
@@ -220,7 +220,7 @@ For any axis not supplied, directed_velocity will be used.</p>
 <li><p>upper_bound=[None,None,None]: Upper bound of the distribution (vector) [m]</p></li>
 <li><p>rms_velocity=[0,0,0]: Thermal velocity spread (vector) [m/s]</p></li>
 <li><p>directed_velocity=[0,0,0]: Directed, average, velocity (vector) [m/s]</p></li>
-<li><p>fill_in=False: Flags whether to fill in the empty spaced opened up when the grid moves</p></li>
+<li><p>fill_in: Flags whether to fill in the empty spaced opened up when the grid moves</p></li>
 </ul>
 <p># This will create a distribution where the density is n0 below rmax and zero elsewhere.
 dist = AnalyticDistribution(density_expression=’((x**2+y**2)&lt;rmax**2)*n0’,</p>
@@ -233,9 +233,9 @@ n0 = 1.e20,
 </dl>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_ParticleListDistribution">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_ParticleListDistribution</code><span class="sig-paren">(</span><em>x=0.0</em>, <em>y=0.0</em>, <em>z=0.0</em>, <em>ux=0.0</em>, <em>uy=0.0</em>, <em>uz=0.0</em>, <em>weight=0.0</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_ParticleListDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ParticleListDistribution" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_ParticleListDistribution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">z</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">ux</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">uy</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">uz</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">weight</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_ParticleListDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ParticleListDistribution" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Load particles at the specified positions and velocities</dt><dd><ul class="simple">
 <li><p>x=0.: List of x positions of the particles [m]</p></li>

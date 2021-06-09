@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -151,7 +151,7 @@
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">_ClassWithInit</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">_ClassWithInit</span>
 
 <span class="c1"># ---------------</span>
 <span class="c1"># Physics objects</span>
@@ -168,12 +168,14 @@
 <span class="sd">      - source_smoother = None: Smoother object to apply to the sources (smoother object)</span>
 <span class="sd">      - field_smoother = None: Smoother object to apply to the fields (smoother object)</span>
 <span class="sd">      - subcycling = None: level of subcycling for the GPSTD solver (integer)</span>
+<span class="sd">      - galilean_velocity = None: Velocity of Galilean reference frame (vector of floats) [m/s]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">methods_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Yee&#39;</span><span class="p">,</span> <span class="s1">&#39;CKC&#39;</span><span class="p">,</span> <span class="s1">&#39;Lehe&#39;</span><span class="p">,</span> <span class="s1">&#39;PSTD&#39;</span><span class="p">,</span> <span class="s1">&#39;PSATD&#39;</span><span class="p">,</span> <span class="s1">&#39;GPSTD&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stencil_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cfl</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l_nodal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stencil_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cfl</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l_nodal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">source_smoother</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">field_smoother</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subcycling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">galilean_velocity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
 
         <span class="k">assert</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">PICMI_ElectromagneticSolver</span><span class="o">.</span><span class="n">methods_list</span><span class="p">,</span> \
@@ -187,6 +189,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">source_smoother</span> <span class="o">=</span> <span class="n">source_smoother</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">field_smoother</span> <span class="o">=</span> <span class="n">field_smoother</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subcycling</span> <span class="o">=</span> <span class="n">subcycling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">galilean_velocity</span> <span class="o">=</span> <span class="n">galilean_velocity</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
 
@@ -196,19 +199,44 @@
 <span class="sd">    Electrostatic field solver</span>
 <span class="sd">      - grid: grid object to be used by the solver (grid object)</span>
 <span class="sd">      - method = None: One of &#39;FFT&#39;, or &#39;Multigrid&#39; (string)</span>
+<span class="sd">      - required_precision: Level of precision required for iterative solvers (float)</span>
+<span class="sd">      - maximum_iterations: Maximum number of iterations for iterative solvers (integer)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">methods_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;FFT&#39;</span><span class="p">,</span> <span class="s1">&#39;Multigrid&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">required_precision</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maximum_iterations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
 
-        <span class="k">assert</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">PICMI_Electrostatic_solver</span><span class="o">.</span><span class="n">methods_list</span><span class="p">,</span> \
-               <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;method must be one of &#39;</span><span class="o">+</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PICMI_Electrostatic_solver</span><span class="o">.</span><span class="n">methods_list</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">PICMI_ElectrostaticSolver</span><span class="o">.</span><span class="n">methods_list</span><span class="p">,</span> \
+               <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;method must be one of &#39;</span><span class="o">+</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PICMI_ElectrostaticSolver</span><span class="o">.</span><span class="n">methods_list</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">required_precision</span> <span class="o">=</span> <span class="n">required_precision</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maximum_iterations</span> <span class="o">=</span> <span class="n">maximum_iterations</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">PICMI_MagnetostaticSolver</span><span class="p">(</span><span class="n">_ClassWithInit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Magnetostatic field solver</span>
+<span class="sd">      - grid: grid object to be used by the solver (grid object)</span>
+<span class="sd">      - method = None: One of &#39;FFT&#39;, or &#39;Multigrid&#39; (string)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">methods_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;FFT&#39;</span><span class="p">,</span> <span class="s1">&#39;Multigrid&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+
+        <span class="k">assert</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">PICMI_MagnetostaticSolver</span><span class="o">.</span><span class="n">methods_list</span><span class="p">,</span> \
+               <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;method must be one of &#39;</span><span class="o">+</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PICMI_MagnetostaticSolver</span><span class="o">.</span><span class="n">methods_list</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
 
 
 <span class="c1"># ------------------</span>
@@ -224,7 +252,7 @@
 <span class="sd">    - stride: Stride along each axis. (vector)</span>
 <span class="sd">    - alpha: Smoothing coefficients along each axis. (vector)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_pass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">compensation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_pass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">compensation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_pass</span> <span class="o">=</span> <span class="n">n_pass</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compensation</span> <span class="o">=</span> <span class="n">compensation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
@@ -256,13 +284,13 @@
 <span class="sd">      - bc_zmin: Boundary condition at min Z: One of periodic, open, dirichlet, or neumann</span>
 <span class="sd">      - bc_zmax: Boundary condition at max Z: One of periodic, open, dirichlet, or neumann</span>
 
-<span class="sd">      - moving_window_velocity: Moving frame Z velocity [m/s]</span>
+<span class="sd">      - moving_window_zvelocity: Moving frame Z velocity [m/s]</span>
 
 <span class="sd">      - refined_regions: List of refined regions, each element being a list of the format [level, lo, hi, refinement_factor],</span>
 <span class="sd">                         with level being the refinement level, with 1 being the first level of refinement, 2 being the second etc,</span>
 <span class="sd">                         lo and hi being vectors of length 2 specifying the extent of the region,</span>
 <span class="sd">                         and refinement_factor defaulting to [2,2] (relative to next lower level)</span>
-<span class="sd">      </span>
+
 <span class="sd">      - lower_bound_particles: Position of particle lower bound (vector of floats) [m]</span>
 <span class="sd">      - upper_bound_particles: Position of particle upper bound (vector of floats) [m]</span>
 <span class="sd">      - rmin_particles: Position of min particle boundary along R [m] (float)</span>
@@ -281,16 +309,16 @@
 
     <span class="n">number_of_dimensions</span> <span class="o">=</span> <span class="mi">2</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">lower_boundary_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_boundary_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">nr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_azimuthal_modes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">rmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">bc_rmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_rmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_zmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_zmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">moving_window_velocity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refined_regions</span><span class="o">=</span><span class="p">[],</span>
-                 <span class="n">lower_bound_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_bound_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-                 <span class="n">rmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-                 <span class="n">lower_boundary_conditions_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_boundary_conditions_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-                 <span class="n">bc_rmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_rmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_zmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_zmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">moving_window_zvelocity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refined_regions</span><span class="o">=</span><span class="p">[],</span>
+                 <span class="n">lower_bound_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_bound_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">rmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">lower_boundary_conditions_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_boundary_conditions_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">bc_rmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_rmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_zmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_zmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">guard_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pml_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
 
         <span class="c1"># Sanity check and init of input arguments related to grid parameters</span>
@@ -333,30 +361,30 @@
             <span class="n">bc_rmax</span><span class="p">,</span> <span class="n">bc_zmax</span> <span class="o">=</span> <span class="n">upper_boundary_conditions</span>
 
         <span class="c1"># Sanity check and init of input arguments related to particle boundary parameters</span>
-        <span class="c1"># By default, if not specified, particle boundary values are the same as field boundary values </span>
-        <span class="c1"># By default, if not specified, particle boundary conditions are the same as field boundary conditions   </span>
-        <span class="k">if</span> <span class="n">lower_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
-            <span class="k">if</span> <span class="p">(</span><span class="n">rmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">zmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span> 
-                <span class="n">lower_bound_particles</span> <span class="o">=</span> <span class="n">lower_bound</span> 
+        <span class="c1"># By default, if not specified, particle boundary values are the same as field boundary values</span>
+        <span class="c1"># By default, if not specified, particle boundary conditions are the same as field boundary conditions</span>
+        <span class="k">if</span> <span class="n">lower_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">rmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">zmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">lower_bound_particles</span> <span class="o">=</span> <span class="n">lower_bound</span>
                 <span class="n">rmin_particles</span><span class="p">,</span> <span class="n">zmin_particles</span> <span class="o">=</span> <span class="n">lower_bound_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">lower_bound_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">rmin_particles</span><span class="p">,</span> <span class="n">zmin_particles</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span> 
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">rmin_particles</span><span class="p">,</span> <span class="n">zmin_particles</span> <span class="o">=</span> <span class="n">lower_bound_particles</span>
-        <span class="k">if</span> <span class="n">upper_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
-            <span class="k">if</span> <span class="p">(</span><span class="n">rmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">zmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span> 
+        <span class="k">if</span> <span class="n">upper_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">rmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">zmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="n">upper_bound_particles</span> <span class="o">=</span> <span class="n">upper_bound</span>
                 <span class="n">rmax_particles</span><span class="p">,</span> <span class="n">zmax_particles</span> <span class="o">=</span> <span class="n">upper_bound_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">upper_bound_particles</span><span class="o">=</span><span class="p">[</span><span class="n">rmax_particles</span><span class="p">,</span> <span class="n">zmax_particles</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span> 
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">rmax_particles</span><span class="p">,</span> <span class="n">zmax_particles</span> <span class="o">=</span> <span class="n">upper_bound_particles</span>
-         
+
         <span class="k">if</span> <span class="n">lower_boundary_conditions_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">bc_rmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">bc_zmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="n">lower_boundary_conditions_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions</span>
                 <span class="n">bc_rmin_particles</span><span class="p">,</span> <span class="n">bc_zmin_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">lower_boundary_conditions_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">bc_rmin_particles</span><span class="p">,</span> <span class="n">bc_zmin_particles</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">bc_rmin_particles</span><span class="p">,</span> <span class="n">bc_zmin_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions_particles</span>
@@ -364,7 +392,7 @@
             <span class="k">if</span> <span class="p">(</span><span class="n">bc_rmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">bc_zmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="n">upper_boundary_conditions_particles</span> <span class="o">=</span> <span class="n">upper_boundary_conditions</span>
                 <span class="n">bc_rmax_particles</span><span class="p">,</span> <span class="n">bc_zmax_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">upper_boundary_conditions_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">bc_rmax_particles</span><span class="p">,</span> <span class="n">bc_zmax_particles</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">bc_rmax_particles</span><span class="p">,</span> <span class="n">bc_zmax_particles</span> <span class="o">=</span> <span class="n">upper_boundary_conditions_particles</span>
@@ -377,7 +405,7 @@
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">upper_boundary_conditions</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Wrong number of upper boundary conditions specified&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">number_of_cells</span> <span class="o">=</span> <span class="n">number_of_cells</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span> <span class="o">=</span> <span class="n">lower_bound</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span> <span class="o">=</span> <span class="n">upper_bound</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lower_boundary_conditions</span> <span class="o">=</span> <span class="n">lower_boundary_conditions</span>
@@ -388,7 +416,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">upper_boundary_conditions_particles</span> <span class="o">=</span> <span class="n">upper_boundary_conditions_particles</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">guard_cells</span> <span class="o">=</span> <span class="n">guard_cells</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pml_cells</span> <span class="o">=</span> <span class="n">pml_cells</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">nr</span> <span class="o">=</span> <span class="n">nr</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nz</span> <span class="o">=</span> <span class="n">nz</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_azimuthal_modes</span> <span class="o">=</span> <span class="n">n_azimuthal_modes</span>
@@ -409,7 +437,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">bc_zmin_particles</span> <span class="o">=</span> <span class="n">bc_zmin_particles</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bc_zmax_particles</span> <span class="o">=</span> <span class="n">bc_zmax_particles</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">moving_window_velocity</span> <span class="o">=</span> <span class="n">moving_window_velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moving_window_zvelocity</span> <span class="o">=</span> <span class="n">moving_window_zvelocity</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">refined_regions</span> <span class="o">=</span> <span class="n">refined_regions</span>
         <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">refined_regions</span><span class="p">:</span>
@@ -477,18 +505,18 @@
 
     <span class="n">number_of_dimensions</span> <span class="o">=</span> <span class="mi">2</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">lower_boundary_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_boundary_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">nx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">xmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">bc_xmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_xmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_ymin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_ymax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">moving_window_velocity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refined_regions</span><span class="o">=</span><span class="p">[],</span><span class="n">lower_bound_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_bound_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">xmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">xmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">lower_boundary_conditions_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_boundary_conditions_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">bc_xmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_xmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_ymin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_ymax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">guard_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pml_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">guard_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pml_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-                 
+
         <span class="c1"># Sanity check and init of input arguments related to grid parameters</span>
         <span class="k">assert</span> <span class="p">(</span><span class="n">number_of_cells</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">nx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ny</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> \
                <span class="p">(</span><span class="n">number_of_cells</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">nx</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ny</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">),</span> \
@@ -528,30 +556,30 @@
             <span class="n">bc_xmax</span><span class="p">,</span> <span class="n">bc_ymax</span> <span class="o">=</span> <span class="n">upper_boundary_conditions</span>
 
         <span class="c1"># Sanity check and init of input arguments related to particle boundary parameters</span>
-        <span class="c1"># By default, if not specified, particle boundary values are the same as field boundary values </span>
-        <span class="c1"># By default, if not specified, particle boundary conditions are the same as field boundary conditions   </span>
-        <span class="k">if</span> <span class="n">lower_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
-            <span class="k">if</span> <span class="p">(</span><span class="n">xmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ymin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span> 
-                <span class="n">lower_bound_particles</span> <span class="o">=</span> <span class="n">lower_bound</span> 
+        <span class="c1"># By default, if not specified, particle boundary values are the same as field boundary values</span>
+        <span class="c1"># By default, if not specified, particle boundary conditions are the same as field boundary conditions</span>
+        <span class="k">if</span> <span class="n">lower_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">xmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ymin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">lower_bound_particles</span> <span class="o">=</span> <span class="n">lower_bound</span>
                 <span class="n">xmin_particles</span><span class="p">,</span> <span class="n">ymin_particles</span> <span class="o">=</span> <span class="n">lower_bound_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">lower_bound_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">xmin_particles</span><span class="p">,</span> <span class="n">ymin_particles</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span> 
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">xmin_particles</span><span class="p">,</span> <span class="n">ymin_particles</span> <span class="o">=</span> <span class="n">lower_bound_particles</span>
-        <span class="k">if</span> <span class="n">upper_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
-            <span class="k">if</span> <span class="p">(</span><span class="n">xmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ymax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span> 
+        <span class="k">if</span> <span class="n">upper_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">xmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ymax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="n">upper_bound_particles</span> <span class="o">=</span> <span class="n">upper_bound</span>
                 <span class="n">xmax_particles</span><span class="p">,</span> <span class="n">ymax_particles</span> <span class="o">=</span> <span class="n">upper_bound_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">upper_bound_particles</span><span class="o">=</span><span class="p">[</span><span class="n">xmax_particles</span><span class="p">,</span> <span class="n">ymax_particles</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span> 
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">xmax_particles</span><span class="p">,</span> <span class="n">ymax_particles</span> <span class="o">=</span> <span class="n">upper_bound_particles</span>
-         
+
         <span class="k">if</span> <span class="n">lower_boundary_conditions_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">bc_xmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">bc_ymin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="n">lower_boundary_conditions_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions</span>
                 <span class="n">bc_xmin_particles</span><span class="p">,</span> <span class="n">bc_ymin_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">lower_boundary_conditions_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">bc_xmin_particles</span><span class="p">,</span> <span class="n">bc_ymin_particles</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">bc_xmin_particles</span><span class="p">,</span> <span class="n">bc_ymin_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions_particles</span>
@@ -559,7 +587,7 @@
             <span class="k">if</span> <span class="p">(</span><span class="n">bc_xmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">bc_ymax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="n">upper_boundary_conditions_particles</span> <span class="o">=</span> <span class="n">upper_boundary_conditions</span>
                 <span class="n">bc_xmax_particles</span><span class="p">,</span> <span class="n">bc_ymax_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">upper_boundary_conditions_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">bc_xmax_particles</span><span class="p">,</span> <span class="n">bc_ymax_particles</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">bc_xmax_particles</span><span class="p">,</span> <span class="n">bc_ymax_particles</span> <span class="o">=</span> <span class="n">upper_boundary_conditions_particles</span>
@@ -574,7 +602,7 @@
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">upper_bound_particles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Wrong number of particle upper bounds specified&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">lower_boundary_conditions_particles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Wrong number of lower particle boundary conditions specified&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">upper_boundary_conditions_particles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Wrong number of upper particle boundary conditions specified&#39;</span><span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">number_of_cells</span> <span class="o">=</span> <span class="n">number_of_cells</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span> <span class="o">=</span> <span class="n">lower_bound</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span> <span class="o">=</span> <span class="n">upper_bound</span>
@@ -609,7 +637,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">moving_window_velocity</span> <span class="o">=</span> <span class="n">moving_window_velocity</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">refined_regions</span> <span class="o">=</span> <span class="n">refined_regions</span>
-        
+
         <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">refined_regions</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">region</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="n">region</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
@@ -618,7 +646,7 @@
             <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">region</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;The refinement factor of the refined region must be a vector of length 2&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">handle_init</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
-        
+
     <span class="k">def</span> <span class="nf">add_refined_region</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">refinement_factor</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;Add a refined region.</span>
 <span class="sd">        level: the refinement level, with 1 being the first level of refinement, 2 being the second etc.</span>
@@ -660,7 +688,7 @@
 <span class="sd">                         with level being the refinement level, with 1 being the first level of refinement, 2 being the second etc,</span>
 <span class="sd">                         lo and hi being vectors of length 3 specifying the extent of the region,</span>
 <span class="sd">                         and refinement_factor defaulting to [2,2,2] (relative to next lower level)</span>
-<span class="sd">      </span>
+
 <span class="sd">      - lower_bound_particles: Position of particle lower bound (vector of floats) [m]</span>
 <span class="sd">      - upper_bound_particles: Position of particle upper bound (vector of floats) [m]</span>
 <span class="sd">      - xmin_particles: Position of min particle boundary along X [m] (float)</span>
@@ -683,7 +711,7 @@
 
     <span class="n">number_of_dimensions</span> <span class="o">=</span> <span class="mi">3</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_bound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">lower_boundary_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_boundary_conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">nx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ny</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nz</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">xmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -692,7 +720,7 @@
                  <span class="n">xmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ymax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">lower_boundary_conditions_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper_boundary_conditions_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">bc_xmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_xmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_ymin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_ymax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">bc_zmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_zmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">guard_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pml_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">bc_zmin_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bc_zmax_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">guard_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pml_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
 
         <span class="c1"># Sanity check and init of input arguments related to grid parameters</span>
@@ -734,30 +762,30 @@
             <span class="n">bc_xmax</span><span class="p">,</span> <span class="n">bc_ymax</span><span class="p">,</span> <span class="n">bc_zmax</span> <span class="o">=</span> <span class="n">upper_boundary_conditions</span>
 
         <span class="c1"># Sanity check and init of input arguments related to particle boundary parameters</span>
-        <span class="c1"># By default, if not specified, particle boundary values are the same as field boundary values </span>
+        <span class="c1"># By default, if not specified, particle boundary values are the same as field boundary values</span>
         <span class="c1"># By default, if not specified, particle boundary conditions are the same as field boundary conditions</span>
-        <span class="k">if</span> <span class="n">lower_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
-            <span class="k">if</span> <span class="p">(</span><span class="n">xmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ymin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">zmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span> 
-                <span class="n">lower_bound_particles</span> <span class="o">=</span> <span class="n">lower_bound</span> 
+        <span class="k">if</span> <span class="n">lower_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">xmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ymin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">zmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">lower_bound_particles</span> <span class="o">=</span> <span class="n">lower_bound</span>
                 <span class="n">xmin_particles</span><span class="p">,</span> <span class="n">ymin_particles</span><span class="p">,</span> <span class="n">zmin_particles</span> <span class="o">=</span> <span class="n">lower_bound_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">lower_bound_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">xmin_particles</span><span class="p">,</span> <span class="n">ymin_particles</span><span class="p">,</span> <span class="n">zmin_particles</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span> 
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">xmin_particles</span><span class="p">,</span> <span class="n">ymin_particles</span><span class="p">,</span> <span class="n">zmin_particles</span> <span class="o">=</span> <span class="n">lower_bound_particles</span>
-        <span class="k">if</span> <span class="n">upper_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
-            <span class="k">if</span> <span class="p">(</span><span class="n">xmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ymax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">zmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span> 
+        <span class="k">if</span> <span class="n">upper_bound_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">xmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ymax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">zmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="n">upper_bound_particles</span> <span class="o">=</span> <span class="n">upper_bound</span>
                 <span class="n">xmax_particles</span><span class="p">,</span> <span class="n">ymax_particles</span><span class="p">,</span> <span class="n">zmax_particles</span> <span class="o">=</span> <span class="n">upper_bound_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">upper_bound_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">xmax_particles</span><span class="p">,</span> <span class="n">ymax_particles</span><span class="p">,</span> <span class="n">zmax_particles</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span> 
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">xmax_particles</span><span class="p">,</span> <span class="n">ymax_particles</span><span class="p">,</span> <span class="n">zmax_particles</span> <span class="o">=</span> <span class="n">upper_bound_particles</span>
-        
+
         <span class="k">if</span> <span class="n">lower_boundary_conditions_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">bc_xmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">bc_ymin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">bc_zmin_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="n">lower_boundary_conditions_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions</span>
                 <span class="n">bc_xmin_particles</span><span class="p">,</span> <span class="n">bc_ymin_particles</span><span class="p">,</span> <span class="n">bc_zmin_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">lower_boundary_conditions_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">bc_xmin_particles</span><span class="p">,</span> <span class="n">bc_ymin_particles</span><span class="p">,</span> <span class="n">bc_zmin_particles</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">bc_xmin_particles</span><span class="p">,</span> <span class="n">bc_ymin_particles</span><span class="p">,</span> <span class="n">bc_zmin_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions_particles</span>
@@ -765,7 +793,7 @@
             <span class="k">if</span> <span class="p">(</span><span class="n">bc_xmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">bc_ymax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">bc_zmax_particles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="n">upper_boundary_conditions_particles</span> <span class="o">=</span> <span class="n">upper_boundary_conditions</span>
                 <span class="n">bc_xmax_particles</span><span class="p">,</span> <span class="n">bc_ymax_particles</span><span class="p">,</span> <span class="n">bc_zmax_particles</span> <span class="o">=</span> <span class="n">lower_boundary_conditions_particles</span>
-            <span class="k">else</span><span class="p">:</span> 
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">upper_boundary_conditions_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">bc_xmax_particles</span><span class="p">,</span> <span class="n">bc_ymax_particles</span><span class="p">,</span> <span class="n">bc_zmax_particles</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">bc_xmax_particles</span><span class="p">,</span> <span class="n">bc_ymax_particles</span><span class="p">,</span> <span class="n">bc_zmax_particles</span> <span class="o">=</span> <span class="n">upper_boundary_conditions_particles</span>
@@ -780,7 +808,7 @@
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">upper_bound_particles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Wrong number of particle upper bounds specified&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">lower_boundary_conditions_particles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Wrong number of particle lower boundary conditions specified&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">upper_boundary_conditions_particles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Wrong number of particle upper boundary conditions specified&#39;</span><span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">number_of_cells</span> <span class="o">=</span> <span class="n">number_of_cells</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span> <span class="o">=</span> <span class="n">lower_bound</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span> <span class="o">=</span> <span class="n">upper_bound</span>

@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -37,7 +37,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Particle distributions" href="distribution.html" />
-    <link rel="prev" title="Constants" href="constants.html" /> 
+    <link rel="prev" title="Diagnostics" href="diagnostics.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -166,9 +166,9 @@
 <p class="admonition-title">Warning</p>
 <p>This section is currently in development.</p>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_Species">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_Species</code><span class="sig-paren">(</span><em>particle_type=None</em>, <em>name=None</em>, <em>charge_state=None</em>, <em>charge=None</em>, <em>mass=None</em>, <em>initial_distribution=None</em>, <em>particle_shape=None</em>, <em>density_scale=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_Species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Species" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_Species</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">particle_type</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">charge_state</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">charge</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mass</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">initial_distribution</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">particle_shape</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">density_scale</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_Species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Species" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Species</dt><dd><ul class="simple">
 <li><p>particle_type=None: A string specifying an elementary particle, atom, or other, as defined in the openPMD 2 species type extension, openPMD-standard/EXT_SpeciesType.md</p></li>
@@ -184,9 +184,9 @@
 </dl>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_MultiSpecies">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_MultiSpecies</code><span class="sig-paren">(</span><em>particle_types=None</em>, <em>names=None</em>, <em>charge_states=None</em>, <em>charges=None</em>, <em>masses=None</em>, <em>proportions=None</em>, <em>initial_distribution=None</em>, <em>particle_shape=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_MultiSpecies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_MultiSpecies" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_MultiSpecies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">particle_types</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">names</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">charge_states</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">charges</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">masses</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">proportions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">initial_distribution</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">particle_shape</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/particles.html#PICMI_MultiSpecies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_MultiSpecies" title="Permalink to this definition">¶</a></dt>
 <dd><p>INCOMPLETE: proportions argument is not implemented
 Multiple species that are initialized with the same distribution
 Each parameter can be list, giving a value for each species, or a single value which is given to all species.</p>
@@ -217,7 +217,7 @@ Each parameter can be list, giving a value for each species, or a single value w
         <a href="distribution.html" class="btn btn-neutral float-right" title="Particle distributions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="constants.html" class="btn btn-neutral float-left" title="Constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="diagnostics.html" class="btn btn-neutral float-left" title="Diagnostics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

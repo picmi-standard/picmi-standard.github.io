@@ -39,14 +39,6 @@ bunch_centroid_velocity   = [0.,0.,1000.*cst.c]
 # Numerics parameters
 # -------------------
 
-# --- geometry and solver
-em_solver_method = 'CKC'
-geometry = '3D'
-# Note that code-specific changes can be introduced with `picmi.codename`
-if picmi.codename == 'fbpic':
-    em_solver_method = 'PSATD'
-    geometry = 'RZ'
-
 # --- Nb time steps
 max_steps = 1000
 
@@ -148,7 +140,7 @@ elif geometry == 'RZ':
         lower_boundary_conditions = [ None, 'open'],
         upper_boundary_conditions = ['reflective', 'open'],
         n_azimuthal_modes         = 2,
-        moving_window_velocity    = moving_window_velocity,
+        moving_window_zvelocity   = moving_window_velocity[-1],
         warpx_max_grid_size       = 32)
 
 smoother = picmi.BinomialSmoother( n_pass       = 1,
@@ -160,14 +152,16 @@ solver = picmi.ElectromagneticSolver( grid            = grid,
 
 # Diagnostics
 # -----------
-field_diag = picmi.FieldDiagnostic(grid = grid,
-                                    period = 100,
-                                    warpx_plot_raw_fields = 1,
-                                    warpx_plot_raw_fields_guards = 1,
-                                    warpx_plot_finepatch = 1,
-                                    warpx_plot_crsepatch = 1)
-part_diag = picmi.ParticleDiagnostic(period = 100,
-                                      species = [beam])
+field_diag = picmi.FieldDiagnostic(name = 'diag1',
+                                   grid = grid,
+                                   period = 100,
+                                   warpx_plot_raw_fields = 1,
+                                   warpx_plot_raw_fields_guards = 1,
+                                   warpx_plot_finepatch = 1,
+                                   warpx_plot_crsepatch = 1)
+part_diag = picmi.ParticleDiagnostic(name = 'diag1',
+                                     period = 100,
+                                     species = [beam])
 
 # Simulation setup
 # -----------------
@@ -193,9 +187,9 @@ beam_layout = picmi.PseudoRandomLayout(
                 n_macroparticles = 10**5,
                 seed = 0)
 initialize_self_field = True
-if picmi.codename != 'warpx':
+if picmi.codename == 'warpx':
     initialize_self_field = False
-sim.add_species(species=beam, layout=beam_layout, 
+sim.add_species(species=beam, layout=beam_layout,
                 initialize_self_field=initialize_self_field)
 
 # Add the diagnostics

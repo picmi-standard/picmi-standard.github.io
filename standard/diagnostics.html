@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Diagnostics &mdash; picmi  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Species objects" href="species.html" />
+    <link rel="prev" title="Applied Field descriptions" href="applied_field.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> picmi
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../how_to_use/how_to_use.html">How to use the PICMI standard</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="standard.html">Definition of the standard</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="standard.html#simulation-and-grid-setup">Simulation and grid setup</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="simulation.html">Simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="field.html">Field solvers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grid.html">Grids</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constants.html">Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="applied_field.html">Applied Field descriptions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Diagnostics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#standard-pic-diagnostics">Standard PIC diagnostics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lab-frame-diagnostics">Lab-frame diagnostics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="standard.html#particles">Particles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard.html#lasers">Lasers</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">picmi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="standard.html">Definition of the standard</a> &raquo;</li>
+        
+      <li>Diagnostics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/standard/diagnostics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="diagnostics">
+<h1>Diagnostics<a class="headerlink" href="#diagnostics" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This section is currently in development.</p>
+</div>
+<div class="section" id="standard-pic-diagnostics">
+<h2>Standard PIC diagnostics<a class="headerlink" href="#standard-pic-diagnostics" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="picmistandard.PICMI_ParticleDiagnostic">
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_ParticleDiagnostic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">period</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">species</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_list</span><span class="o">=</span><span class="default_value">['position', 'momentum', 'weighting']</span></em>, <em class="sig-param"><span class="n">write_dir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">step_min</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">step_max</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parallelio</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/diagnostics.html#PICMI_ParticleDiagnostic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ParticleDiagnostic" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Defines the particle diagnostics in the simulation frame</dt><dd><ul class="simple">
+<li><p>period=1: Period of time steps that the diagnostic is performed</p></li>
+<li><dl class="simple">
+<dt>species: Species or list of species to write out</dt><dd><p>Note that the name attribute must be defined for the species.</p>
+</dd>
+</dl>
+</li>
+<li><p>data_list=[“position”, “momentum”, “weighting”]: The data to be written out</p></li>
+<li><p>write_dir=’.’: Directory where data is to be written</p></li>
+<li><dl class="simple">
+<dt>step_min=None: Minimum step at which diagnostics could be written (optional)</dt><dd><p>Defaults to step 0.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>step_max=None: Maximum step at which diagnostics could be written (optional)</dt><dd><p>Defaults to no limit.</p>
+</dd>
+</dl>
+</li>
+<li><p>parallelio=None: If set to True, particle diagnostics are dumped in parallel (optional)</p></li>
+<li><p>name: Sets the base name for the diagnostic output files (optional)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="picmistandard.PICMI_FieldDiagnostic">
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_FieldDiagnostic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grid</span></em>, <em class="sig-param"><span class="n">period</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">data_list</span><span class="o">=</span><span class="default_value">['rho', 'E', 'B', 'J']</span></em>, <em class="sig-param"><span class="n">write_dir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">step_min</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">step_max</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">number_of_cells</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">lower_bound</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">upper_bound</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parallelio</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/diagnostics.html#PICMI_FieldDiagnostic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_FieldDiagnostic" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Defines the electromagnetic field diagnostics in the simulation frame</dt><dd><ul class="simple">
+<li><p>grid: Grid object for the diagnostic</p></li>
+<li><p>period=1: Period of time steps that the diagnostic is performed</p></li>
+<li><p>data_list=[“rho”, “E”, “B”, “J”]: List of quantities to write out</p></li>
+<li><p>write_dir=’.’: Directory where data is to be written</p></li>
+<li><dl class="simple">
+<dt>step_min=None: Minimum step at which diagnostics could be written (optional)</dt><dd><p>Defaults to step 0.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>step_max=None: Maximum step at which diagnostics could be written (optional)</dt><dd><p>Defaults to no limit.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>number_of_cells=None: Number of cells in each dimension (optional)</dt><dd><p>If not given, will be obtained from grid.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>lower_bound=None: Lower corner of diagnostics box in each direction (optional)</dt><dd><p>If not given, will be obtained from grid.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>upper_bound=None: Higher corner of diagnostics box in each direction (optional)</dt><dd><p>If not given, will be obtained from grid.</p>
+</dd>
+</dl>
+</li>
+<li><p>parallelio=None: If set to True, field diagnostics are dumped in parallel (optional)</p></li>
+<li><p>name: Sets the base name for the diagnostic output files (optional)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="picmistandard.PICMI_ElectrostaticFieldDiagnostic">
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_ElectrostaticFieldDiagnostic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grid</span></em>, <em class="sig-param"><span class="n">period</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">data_list</span><span class="o">=</span><span class="default_value">['rho', 'phi']</span></em>, <em class="sig-param"><span class="n">write_dir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">step_min</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">step_max</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">number_of_cells</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">lower_bound</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">upper_bound</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parallelio</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/diagnostics.html#PICMI_ElectrostaticFieldDiagnostic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_ElectrostaticFieldDiagnostic" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Defines the electrostatic field diagnostics in the simulation frame</dt><dd><ul class="simple">
+<li><p>grid: Grid object for the diagnostic</p></li>
+<li><p>period=1: Period of time steps that the diagnostic is performed</p></li>
+<li><p>data_list=[“rho”, “phi”]: List of quantities to write out</p></li>
+<li><p>write_dir=’.’: Directory where data is to be written</p></li>
+<li><dl class="simple">
+<dt>step_min=None: Minimum step at which diagnostics could be written (optional)</dt><dd><p>Defaults to step 0.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>step_max=None: Maximum step at which diagnostics could be written (optional)</dt><dd><p>Defaults to no limit.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>number_of_cells=None: Number of cells in each dimension (optional)</dt><dd><p>If not given, will be obtained from grid.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>lower_bound=None: Lower corner of diagnostics box in each direction (optional)</dt><dd><p>If not given, will be obtained from grid.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>upper_bound=None: Higher corner of diagnostics box in each direction (optional)</dt><dd><p>If not given, will be obtained from grid.</p>
+</dd>
+</dl>
+</li>
+<li><p>parallelio=None: If set to True, field diagnostics are dumped in parallel (optional)</p></li>
+<li><p>name: Sets the base name for the diagnostic output files (optional)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="lab-frame-diagnostics">
+<h2>Lab-frame diagnostics<a class="headerlink" href="#lab-frame-diagnostics" title="Permalink to this headline">¶</a></h2>
+<p>These diagnostics are used when running boosted-frame simulations.</p>
+<dl class="py class">
+<dt id="picmistandard.PICMI_LabFrameParticleDiagnostic">
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_LabFrameParticleDiagnostic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grid</span></em>, <em class="sig-param"><span class="n">num_snapshots</span></em>, <em class="sig-param"><span class="n">dt_snapshots</span></em>, <em class="sig-param"><span class="n">time_start</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">species</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_list</span><span class="o">=</span><span class="default_value">['position', 'momentum', 'weighting']</span></em>, <em class="sig-param"><span class="n">write_dir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parallelio</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/diagnostics.html#PICMI_LabFrameParticleDiagnostic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_LabFrameParticleDiagnostic" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Defines the particle diagnostics in the lab frame</dt><dd><ul class="simple">
+<li><p>grid: Grid object for the diagnostic</p></li>
+<li><p>num_snapshots: Number of lab frame snapshots to make</p></li>
+<li><p>dt_snapshots: Time between each snapshot in lab frame</p></li>
+<li><p>time_start=0.: Time for the first snapshot in lab frame</p></li>
+<li><dl class="simple">
+<dt>species: Species or list of species to write out</dt><dd><p>Note that the name attribute must be defined for the species.</p>
+</dd>
+</dl>
+</li>
+<li><p>data_list=[“position”, “momentum”, “weighting”]: The data to be written out</p></li>
+<li><p>write_dir=’.’: Directory where data is to be written</p></li>
+<li><p>parallelio=None: If set to True, particle diagnostics are dumped in parallel (optional)</p></li>
+<li><p>name: Sets the base name for the diagnostic output files (optional)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="picmistandard.PICMI_LabFrameFieldDiagnostic">
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_LabFrameFieldDiagnostic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grid</span></em>, <em class="sig-param"><span class="n">num_snapshots</span></em>, <em class="sig-param"><span class="n">dt_snapshots</span></em>, <em class="sig-param"><span class="n">z_subsampling</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">time_start</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">data_list</span><span class="o">=</span><span class="default_value">['rho', 'E', 'B', 'J']</span></em>, <em class="sig-param"><span class="n">write_dir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">parallelio</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/diagnostics.html#PICMI_LabFrameFieldDiagnostic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_LabFrameFieldDiagnostic" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Defines the electromagnetic field diagnostics in the lab frame</dt><dd><ul class="simple">
+<li><p>grid: Grid object for the diagnostic</p></li>
+<li><p>num_snapshots: Number of lab frame snapshots to make</p></li>
+<li><p>dt_snapshots: Time between each snapshot in lab frame</p></li>
+<li><p>z_subsampling=1: A factor which is applied on the resolution of the lab frame reconstruction. (integer)</p></li>
+<li><p>time_start=0.: Time for the first snapshot in lab frame</p></li>
+<li><p>data_list=[“rho”, “E”, “B”, “J”]: List of quantities to write out</p></li>
+<li><p>write_dir=’.’: Directory where data is to be written</p></li>
+<li><p>parallelio=None: If set to True, field diagnostics are dumped in parallel (optional)</p></li>
+<li><p>name: Sets the base name for the diagnostic output files (optional)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="species.html" class="btn btn-neutral float-right" title="Species objects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="applied_field.html" class="btn btn-neutral float-left" title="Applied Field descriptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, PICMI contributors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

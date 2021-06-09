@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -89,6 +89,8 @@
 <li class="toctree-l3"><a class="reference internal" href="field.html">Field solvers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="grid.html">Grids</a></li>
 <li class="toctree-l3"><a class="reference internal" href="constants.html">Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="applied_field.html">Applied Field descriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="diagnostics.html">Diagnostics</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="standard.html#particles">Particles</a></li>
@@ -165,9 +167,9 @@
 <h1>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h1>
 <p>The <cite>Simulation</cite> object is the central object in a PICMI script.
 It defines the simulation time, field solver, registered species, etc.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="picmistandard.PICMI_Simulation">
-<em class="property">class </em><code class="descclassname">picmistandard.</code><code class="descname">PICMI_Simulation</code><span class="sig-paren">(</span><em>solver=None</em>, <em>time_step_size=None</em>, <em>max_steps=None</em>, <em>max_time=None</em>, <em>verbose=None</em>, <em>particle_shape='linear'</em>, <em>gamma_boost=None</em>, <em>cpu_split=None</em>, <em>load_balancing=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">picmistandard.</code><code class="sig-name descname">PICMI_Simulation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">solver</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">time_step_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_steps</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_time</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">particle_shape</span><span class="o">=</span><span class="default_value">'linear'</span></em>, <em class="sig-param"><span class="n">gamma_boost</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cpu_split</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">load_balancing</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a Simulation object</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -189,9 +191,9 @@ Possible values are ‘NGP’, ‘linear’, ‘quadratic’, ‘cubic’.</p></
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="picmistandard.PICMI_Simulation.add_species">
-<code class="descname">add_species</code><span class="sig-paren">(</span><em>species</em>, <em>layout</em>, <em>initialize_self_field=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.add_species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.add_species" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_species</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">species</span></em>, <em class="sig-param"><span class="n">layout</span></em>, <em class="sig-param"><span class="n">initialize_self_field</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.add_species"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.add_species" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add species to be used in the simulation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -208,9 +210,9 @@ is calculated and added to the simulation</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="picmistandard.PICMI_Simulation.add_laser">
-<code class="descname">add_laser</code><span class="sig-paren">(</span><em>laser</em>, <em>injection_method</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.add_laser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.add_laser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_laser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">laser</span></em>, <em class="sig-param"><span class="n">injection_method</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.add_laser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.add_laser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a laser pulses that to be injected in the simulation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -229,9 +231,9 @@ of injection, if the user does not provide injection_method)</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="picmistandard.PICMI_Simulation.write_input_file">
-<code class="descname">write_input_file</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.write_input_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.write_input_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write_input_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.write_input_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.write_input_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write the parameters of the simulation, as defined in the PICMI input,
 into another, more code-specific input file.</p>
 <p>This can be used for codes that are not Python-driven (e.g. compiled,
@@ -243,9 +245,9 @@ pure C++ or Fortran codes) and expect a text input in a given format.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="picmistandard.PICMI_Simulation.step">
-<code class="descname">step</code><span class="sig-paren">(</span><em>nsteps=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.step" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nsteps</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/picmistandard/simulation.html#PICMI_Simulation.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#picmistandard.PICMI_Simulation.step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the simulation for <cite>nsteps</cite> timesteps</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

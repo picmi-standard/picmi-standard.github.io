@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -204,14 +204,6 @@ This script uses a common set of objects that each code implements.</p>
 <span class="c1"># Numerics parameters</span>
 <span class="c1"># -------------------</span>
 
-<span class="c1"># --- geometry and solver</span>
-<span class="n">em_solver_method</span> <span class="o">=</span> <span class="s1">&#39;CKC&#39;</span>
-<span class="n">geometry</span> <span class="o">=</span> <span class="s1">&#39;3D&#39;</span>
-<span class="c1"># Note that code-specific changes can be introduced with `picmi.codename`</span>
-<span class="k">if</span> <span class="n">picmi</span><span class="o">.</span><span class="n">codename</span> <span class="o">==</span> <span class="s1">&#39;fbpic&#39;</span><span class="p">:</span>
-    <span class="n">em_solver_method</span> <span class="o">=</span> <span class="s1">&#39;PSATD&#39;</span>
-    <span class="n">geometry</span> <span class="o">=</span> <span class="s1">&#39;RZ&#39;</span>
-
 <span class="c1"># --- Nb time steps</span>
 <span class="n">max_steps</span> <span class="o">=</span> <span class="mi">1000</span>
 
@@ -261,11 +253,11 @@ This script uses a common set of objects that each code implements.</p>
                 <span class="n">density_expression</span> <span class="o">=</span> <span class="n">plasma_density_expression</span><span class="p">,</span>
                 <span class="n">lower_bound</span>        <span class="o">=</span> <span class="n">plasma_min</span><span class="p">,</span>
                 <span class="n">upper_bound</span>        <span class="o">=</span> <span class="n">plasma_max</span><span class="p">,</span>
-                <span class="n">fill_in</span>            <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+                <span class="n">fill_in</span>            <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">plasma</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">MultiSpecies</span><span class="p">(</span>
                 <span class="n">particle_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;He&#39;</span><span class="p">,</span> <span class="s1">&#39;Ar&#39;</span><span class="p">,</span> <span class="s1">&#39;electron&#39;</span><span class="p">],</span>
                 <span class="n">names</span>          <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;He+&#39;</span><span class="p">,</span> <span class="s1">&#39;Argon&#39;</span><span class="p">,</span> <span class="s1">&#39;e-&#39;</span><span class="p">],</span>
-                <span class="n">charge_states</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="bp">None</span><span class="p">],</span>
+                <span class="n">charge_states</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
                 <span class="n">proportions</span>    <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="mf">0.8</span><span class="p">],</span>
                 <span class="n">initial_distribution</span><span class="o">=</span><span class="n">plasma_dist</span><span class="p">)</span>
 <span class="c1"># Individual species in a `MultiSpecies` can be addressed either</span>
@@ -310,14 +302,14 @@ This script uses a common set of objects that each code implements.</p>
         <span class="n">number_of_cells</span>           <span class="o">=</span> <span class="p">[</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="n">nz</span><span class="p">],</span>
         <span class="n">lower_bound</span>               <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="n">zmin</span><span class="p">],</span>
         <span class="n">upper_bound</span>               <span class="o">=</span> <span class="p">[</span><span class="n">xmax</span><span class="p">,</span> <span class="n">zmax</span><span class="p">],</span>
-        <span class="n">lower_boundary_conditions</span> <span class="o">=</span> <span class="p">[</span> <span class="bp">None</span><span class="p">,</span> <span class="s1">&#39;open&#39;</span><span class="p">],</span>
+        <span class="n">lower_boundary_conditions</span> <span class="o">=</span> <span class="p">[</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;open&#39;</span><span class="p">],</span>
         <span class="n">upper_boundary_conditions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;reflective&#39;</span><span class="p">,</span> <span class="s1">&#39;open&#39;</span><span class="p">],</span>
         <span class="n">n_azimuthal_modes</span>         <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="n">moving_window_velocity</span>    <span class="o">=</span> <span class="n">moving_window_velocity</span><span class="p">,</span>
+        <span class="n">moving_window_zvelocity</span>   <span class="o">=</span> <span class="n">moving_window_velocity</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
         <span class="n">warpx_max_grid_size</span>       <span class="o">=</span> <span class="mi">32</span><span class="p">)</span>
 
 <span class="n">smoother</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">BinomialSmoother</span><span class="p">(</span> <span class="n">n_pass</span>       <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                                   <span class="n">compensation</span> <span class="o">=</span> <span class="bp">True</span> <span class="p">)</span>
+                                   <span class="n">compensation</span> <span class="o">=</span> <span class="kc">True</span> <span class="p">)</span>
 <span class="n">solver</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">ElectromagneticSolver</span><span class="p">(</span> <span class="n">grid</span>            <span class="o">=</span> <span class="n">grid</span><span class="p">,</span>
                                       <span class="n">cfl</span>             <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span>
                                       <span class="n">method</span>          <span class="o">=</span> <span class="n">em_solver_method</span><span class="p">,</span>
@@ -325,14 +317,16 @@ This script uses a common set of objects that each code implements.</p>
 
 <span class="c1"># Diagnostics</span>
 <span class="c1"># -----------</span>
-<span class="n">field_diag</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">FieldDiagnostic</span><span class="p">(</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span><span class="p">,</span>
-                                    <span class="n">period</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-                                    <span class="n">warpx_plot_raw_fields</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                                    <span class="n">warpx_plot_raw_fields_guards</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                                    <span class="n">warpx_plot_finepatch</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                                    <span class="n">warpx_plot_crsepatch</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">part_diag</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">ParticleDiagnostic</span><span class="p">(</span><span class="n">period</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-                                      <span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="n">beam</span><span class="p">])</span>
+<span class="n">field_diag</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">FieldDiagnostic</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;diag1&#39;</span><span class="p">,</span>
+                                   <span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span><span class="p">,</span>
+                                   <span class="n">period</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+                                   <span class="n">warpx_plot_raw_fields</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                                   <span class="n">warpx_plot_raw_fields_guards</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                                   <span class="n">warpx_plot_finepatch</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                                   <span class="n">warpx_plot_crsepatch</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">part_diag</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">ParticleDiagnostic</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;diag1&#39;</span><span class="p">,</span>
+                                     <span class="n">period</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+                                     <span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="n">beam</span><span class="p">])</span>
 
 <span class="c1"># Simulation setup</span>
 <span class="c1"># -----------------</span>
@@ -357,10 +351,10 @@ This script uses a common set of objects that each code implements.</p>
 <span class="n">beam_layout</span> <span class="o">=</span> <span class="n">picmi</span><span class="o">.</span><span class="n">PseudoRandomLayout</span><span class="p">(</span>
                 <span class="n">n_macroparticles</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span>
                 <span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">initialize_self_field</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="k">if</span> <span class="n">picmi</span><span class="o">.</span><span class="n">codename</span> <span class="o">!=</span> <span class="s1">&#39;warpx&#39;</span><span class="p">:</span>
-    <span class="n">initialize_self_field</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">sim</span><span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="n">species</span><span class="o">=</span><span class="n">beam</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">beam_layout</span><span class="p">,</span> 
+<span class="n">initialize_self_field</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">if</span> <span class="n">picmi</span><span class="o">.</span><span class="n">codename</span> <span class="o">==</span> <span class="s1">&#39;warpx&#39;</span><span class="p">:</span>
+    <span class="n">initialize_self_field</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="n">species</span><span class="o">=</span><span class="n">beam</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">beam_layout</span><span class="p">,</span>
                 <span class="n">initialize_self_field</span><span class="o">=</span><span class="n">initialize_self_field</span><span class="p">)</span>
 
 <span class="c1"># Add the diagnostics</span>
@@ -370,7 +364,7 @@ This script uses a common set of objects that each code implements.</p>
 <span class="c1"># Picmi input script</span>
 <span class="c1"># ==================</span>
 
-<span class="n">run_python_simulation</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">run_python_simulation</span> <span class="o">=</span> <span class="kc">True</span>
 
 <span class="k">if</span> <span class="n">run_python_simulation</span><span class="p">:</span>
     <span class="c1"># `sim.step` will run the code, controlling it from Python</span>
